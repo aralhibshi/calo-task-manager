@@ -1,12 +1,12 @@
 // Dependencies
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
-import session from 'express-session';
+import session, { SessionOptions } from 'express-session';
 
 // Passport Configuration
-// import passport from './lib/passportConfig';
+import passport from './lib/passportConfig';
 
-const PORT = 4000;
+const PORT: number = 4000;
 
 // Initialize App
 const app: Express = express();
@@ -19,17 +19,20 @@ app.use(express.urlencoded({
 // Parse JSON
 app.use(express.json());
 
-// Session
-app.use(session({
+// Session Configuration
+const sessionOptions: SessionOptions = {
     secret: 'MyCoolSecret',
     saveUninitialized: true,
     resave: false,
     cookie: {maxAge: 365000000}
-}));
+};
+
+// Session
+app.use(session(sessionOptions));
 
 // Initialize Passport and Session Access
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Imported Routes
 import authRoute from './routes/auth';

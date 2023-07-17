@@ -7,5 +7,6 @@ import * as taskCtrl from '../controllers/task';
 
 // Routes
 router.post('/task/add', taskCtrl.task_create_post)
+router.get('/task/index', taskCtrl.task_index_get)
 
 export default router;

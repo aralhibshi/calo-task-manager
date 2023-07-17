@@ -1,4 +1,5 @@
 import { Document, Schema, Model, model } from 'mongoose';
+import bcrypt from 'bcrypt'
 
 // Interface
 export interface IUser extends Document {
@@ -7,6 +8,7 @@ export interface IUser extends Document {
     emailAddress: string;
     password: string;
     tasks: Array<Schema.Types.ObjectId>;
+    verifyPassword(password: string): Promise<boolean>;
 };
 
 // Schema
@@ -41,4 +43,14 @@ const userSchema: Schema<IUser> = new Schema({
     timestamps: true
 });
 
+// Verify Password Method
+userSchema.methods.verifyPassword = async function (password: string): Promise<boolean> {
+    try {
+      return await bcrypt.compare(password, this.password);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+// Export User Model and Interface
 export const UserModel: Model<IUser> = model<IUser>('User', userSchema);

@@ -5,9 +5,9 @@ export interface ITask extends Document {
     title: string;
     description: string;
     users: Array<Schema.Types.ObjectId>;
-
 };
 
+// Schema
 const taskSchema: Schema<ITask> = new Schema({
     title: {
         type: String,
@@ -28,4 +28,5 @@ const taskSchema: Schema<ITask> = new Schema({
     timestamps: true
 });
 
+// Export Task Model and Interface
 export const TaskModel: Model<ITask> = model<ITask>('Task', taskSchema);
