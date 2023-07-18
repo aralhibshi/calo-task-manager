@@ -20,7 +20,10 @@ export const task_create_post = async (req: Request, res: Response): Promise<voi
         // Push User ID to 'users' in New Task
         await Task.findByIdAndUpdate(
             task._id,
-            {$push: {users: '64b3f69f447e0628f0534cf6'}},
+            {
+                $push: {users: '64b3f69f447e0628f0534cf6'},
+                $set: {team: '64b6697b72b2c9c98828ab38'}
+            },
             {new: true}
         );
 
@@ -47,8 +50,12 @@ export const task_index_get = async (req: Request, res: Response): Promise<void>
 
         // Find Tasks Based on Limit
         if (limit) {
-            const tasks: ITask[] = await Task.find().limit(limit).populate('users');
-            res.json({tasks}).status(200);
+            const tasks: ITask[] = await Task.find()
+                .limit(limit)
+                .populate('users')
+                .populate('team');
+
+            res.json(tasks).status(200);
         } else {
             res.json({'message': 'Cannot Get Limit'});
         }

@@ -21,6 +21,7 @@ export const auth_signup_post = async (req: Request, res: Response): Promise<voi
     }
     catch (err) {
         console.log('Error Creating User');
+        console.log(err);
         res.json({'message': err}).status(400);
     }
 };

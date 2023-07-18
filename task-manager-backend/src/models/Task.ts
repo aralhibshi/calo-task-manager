@@ -4,6 +4,8 @@ import { Document, Schema, Model, model } from 'mongoose'
 export interface ITask extends Document {
     title: string;
     description: string;
+    status: string;
+    team: Schema.Types.ObjectId;
     users: Array<Schema.Types.ObjectId>;
 };
 
@@ -19,6 +21,14 @@ const taskSchema: Schema<ITask> = new Schema({
         type: String,
         minlength: [5, '"Description", must be 5 or more characters'],
         required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    team: {
+        type: Schema.Types.ObjectId,
+        ref: 'Team'
     },
     users: [{
         type: Schema.Types.ObjectId,
