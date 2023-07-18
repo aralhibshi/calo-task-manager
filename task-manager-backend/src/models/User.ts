@@ -7,6 +7,7 @@ export interface IUser extends Document {
     lastName: string;
     emailAddress: string;
     password: string;
+    teams: Array<Schema.Types.ObjectId>;
     tasks: Array<Schema.Types.ObjectId>;
     verifyPassword(password: string): Promise<boolean>;
 };
@@ -35,9 +36,13 @@ const userSchema: Schema<IUser> = new Schema({
         type: String,
         required: true
     },
+    teams: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Team'
+    }],
     tasks: [{
         type: Schema.Types.ObjectId,
-        ref: 'Task',
+        ref: 'Task'
     }]
 },{
     timestamps: true

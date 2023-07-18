@@ -11,7 +11,7 @@ import { IUser, UserModel } from '../models/User';
 const User: Model<IUser> = UserModel;
 
 // Create - Task (M-M, Tasks and Users)
-export const task_create_post = async (req: Request, res: Response) => {
+export const task_create_post = async (req: Request, res: Response): Promise<void> => {
     try {
         // Create Task
         const task: ITask = new Task(req.body);
@@ -31,7 +31,7 @@ export const task_create_post = async (req: Request, res: Response) => {
             {new: true}
         );
 
-        res.json({'message': 'Task Created!', task, user}).status(200);
+        res.json({'message': {task}, user}).status(200);
     }
     catch (err) {
         console.log('Error Creating Task');
@@ -39,15 +39,15 @@ export const task_create_post = async (req: Request, res: Response) => {
     }
 };
 
-// Read - Task (With Limit)
-export const task_index_get = async (req: Request, res: Response) => {
+// Read - Task (Task Index with Limit)
+export const task_index_get = async (req: Request, res: Response): Promise<void> => {
     try {
         // Limit for Amount of Tasks to Get
         let limit: number | undefined = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
 
         // Find Tasks Based on Limit
         if (limit) {
-            const tasks = await Task.find().limit(limit).populate('users');
+            const tasks: ITask[] = await Task.find().limit(limit).populate('users');
             res.json({tasks}).status(200);
         } else {
             res.json({'message': 'Cannot Get Limit'});
@@ -58,3 +58,33 @@ export const task_index_get = async (req: Request, res: Response) => {
         res.json({'message': err}).status(400);
     }
 };
+
+// Update - Task
+export const task_edit_post = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const task = await Task.findByIdAndUpdate(
+            req.body.id,
+            req.body
+        );
+
+        res.json({'message': 'Task Updated!', task}).status(200);
+    }
+    catch (err) {
+        console.log('Error Updating Task');
+        res.json({'message': err}).status(400);
+    }
+}
+
+export const task_delete_post = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // Find Task in User and Delete
+
+        // Find Task and Delete
+        const task = await Task.findByIdAndDelete(req.body.id);
+        res.json({'message': 'Task Deleted!', task}).status(200);
+    }
+    catch (err) {
+        console.log('Error Deleting Task');
+        res.json({'message': err}).status(400);
+    }
+}

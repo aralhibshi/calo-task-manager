@@ -38,11 +38,13 @@ app.use(passport.session())
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
 import taskRoute from './routes/task';
+import teamRoute from './routes/team';
 
 // Mounted Routes
 app.use('/', authRoute);
 app.use('/', userRoute);
 app.use('/', taskRoute);
+app.use('/', teamRoute);
 
 // Start Server
 app.listen(PORT, () => {

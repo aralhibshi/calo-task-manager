@@ -9,7 +9,7 @@ import { IUser, UserModel } from '../models/User';
 const User: Model<IUser> = UserModel;
 
 // Create - User (Sign Up)
-export const auth_signup_post = async (req: Request, res: Response) => {
+export const auth_signup_post = async (req: Request, res: Response): Promise<void> => {
     try {
         const user: IUser = new User(req.body);
 
@@ -17,7 +17,7 @@ export const auth_signup_post = async (req: Request, res: Response) => {
         user.password = hash;
 
         await user.save();
-        res.json({'message': 'User Created!'}).status(200);
+        res.json({'message': 'User Created!', user}).status(200);
     }
     catch (err) {
         console.log('Error Creating User');
@@ -26,7 +26,7 @@ export const auth_signup_post = async (req: Request, res: Response) => {
 };
 
 // Authentication - Sign In
-export const auth_signin_post = async (req: Request, res: Response) => {
+export const auth_signin_post = async (req: Request, res: Response): Promise<void> => {
     try {
         const { emailAddress, password}: {emailAddress: string, password: string} = req.body;
 
@@ -42,7 +42,7 @@ export const auth_signin_post = async (req: Request, res: Response) => {
 
             // Wrong Password
             if (!isMatch) {
-                return res.json({'message': 'Wrong Password!'}).status(400);
+                res.json({'message': 'Wrong Password!'}).status(400);
             } else {
 
                 // Payload Interface for JWT
@@ -50,14 +50,14 @@ export const auth_signin_post = async (req: Request, res: Response) => {
                     user:  {
                         id: string;
                     }
-                }
+                };
 
                 // Payload
                 const payload: Payload = {
                     user: {
                         id: user._id
                     }
-                }
+                };
 
                 // Generate JWT
                 jwt.sign(
@@ -68,7 +68,7 @@ export const auth_signin_post = async (req: Request, res: Response) => {
                         if (err) throw err;
                         res.json({ token }).status(200);
                     }
-                )
+                );
             }
         }
     }
