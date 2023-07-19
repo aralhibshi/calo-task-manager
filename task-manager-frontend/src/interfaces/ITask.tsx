@@ -12,3 +12,9 @@ export interface ITask {
     createdAt: Date;
     updatedAt: Date;
 }
+
+// New Task Interface
+export interface INewTask {
+    title: string;
+    description: string;
+}

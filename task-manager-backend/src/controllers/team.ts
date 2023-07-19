@@ -23,7 +23,7 @@ export const team_create_post = async (req: Request, res: Response): Promise<voi
             {
                 $push: {
                     users: {
-                        user: '64b53b33b4c0b9cf0400f230',
+                        user: '64b7c840364a0c66653ab2bd',
                         isOwner: true
                     }
                 }
@@ -33,7 +33,7 @@ export const team_create_post = async (req: Request, res: Response): Promise<voi
 
         // Push Team ID to 'teams' in User
         const user: IUser | null = await User.findByIdAndUpdate(
-            '64b53b33b4c0b9cf0400f230',
+            '64b7c840364a0c66653ab2bd',
             {$push: {teams: team._id}},
             {new: true}
         );

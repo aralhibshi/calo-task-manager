@@ -14,22 +14,27 @@ const User: Model<IUser> = UserModel;
 export const task_create_post = async (req: Request, res: Response): Promise<void> => {
     try {
         // Create Task
-        const task: ITask = new Task(req.body);
+        const task: ITask = new Task(req.body.task);
         await task.save();
 
+        // IDs
+        const userId: string = req.body.user.user.id;
+        const teamId: string = '';
+
         // Push User ID to 'users' in New Task
+
         await Task.findByIdAndUpdate(
             task._id,
             {
-                $push: {users: '64b3f69f447e0628f0534cf6'},
-                $set: {team: '64b6697b72b2c9c98828ab38'}
+                $push: {users: userId},
+                $set: {team: '64b7f85cc6dd5d07a7cca6cd'}
             },
             {new: true}
         );
 
         // Push New Task ID to User 'tasks'
         const user: IUser | null = await User.findByIdAndUpdate(
-            req.body.id,
+            userId,
             {$push: {tasks: task._id}},
             {new: true}
         );
@@ -38,6 +43,7 @@ export const task_create_post = async (req: Request, res: Response): Promise<voi
     }
     catch (err) {
         console.log('Error Creating Task');
+        console.log(err)
         res.json({'message': err}).status(400);
     }
 };

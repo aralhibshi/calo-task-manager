@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -15,9 +15,12 @@ import Home from './components/Home';
 import Signup from './components/user/Signup';
 import Signin from './components/user/Signin';
 import TaskIndex from './components/task/TaskIndex'
+import TaskCreate from './components/task/TaskCreate';
 
 // Interfaces
-import { IUser } from './interfaces/IUser';
+import { IUserToken } from './interfaces/IUser';
+import { INewTask } from './interfaces/ITask';
+
 
 // CSS
 import '../src/App.css';
@@ -25,8 +28,26 @@ import '../src/App.css';
 const App: React.FC = () => {
 
   // States
-  const [user, setUser] = useState<IUser | any>({});
+  const [user, setUser] = useState<IUserToken | {}>();
   const [isAuth, setIsAuth] = useState<Boolean>(false);
+  
+  useEffect(() => {
+    let token = localStorage.getItem('token');
+
+    if (token !=null) {
+      let user = jwtDecode(token)
+
+      if (user) {
+        setIsAuth(true);
+        setUser(user);
+        console.log(user);
+      }
+      else if (!user) {
+        localStorage.removeItem('token');
+        setIsAuth(false);
+      }
+    }
+  }, [])
 
   // Axios Post - Create User
   const registerHandler = (user: object): void => {
@@ -39,25 +60,41 @@ const App: React.FC = () => {
     })
   };
 
-  // Axios Poist - Login User, Save 'token' to Local Storage, Set States
+  // Axios Post - Login User, Save 'token' to Local Storage, Set States
   const loginHandler = (cred: object): void => {
     Axios.post('/auth/signin', cred)
     .then(res => {
-      console.log(res);
       let token = res.data.token;
 
       if (token) {
         localStorage.setItem('token', token);
-        let user = jwtDecode(token);
+        let userToken: IUserToken = jwtDecode(token);
+
+        console.log(userToken.user.id);
 
         setIsAuth(true);
-        setUser(user);
+        setUser(userToken);
       }
     })
     .catch(err => {
       console.log(err);
     })
   };
+
+  // Axios Post - Create Task
+  const createTask = (task: INewTask): void => {
+    Axios.post('/task/add', {task, user})
+    .then(res => {
+
+      if (typeof user !== 'undefined') {
+        console.log(user)
+      }
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <div>
@@ -73,18 +110,18 @@ const App: React.FC = () => {
                   Tasks
                 </NavDropdown.Item>
 
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
+                <NavDropdown.Item as={Link} to='/task/add'>
+                  Add Task
                 </NavDropdown.Item>
 
-                <NavDropdown.Item href="#action/3.3">
-                  Something
+                <NavDropdown.Item as={Link} to='/team/add'>
+                  Add Team
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider />
 
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
+                <NavDropdown.Item as={Link} to='/account'>
+                  Account
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -106,6 +143,11 @@ const App: React.FC = () => {
         <Route
           path='/signin'
           element={<Signin login={loginHandler}/>}
+        />
+
+        <Route
+        path='/task/add'
+        element={<TaskCreate create={createTask}/>}
         />
 
         <Route

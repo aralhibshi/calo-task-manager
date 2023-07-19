@@ -24,6 +24,7 @@ const taskSchema: Schema<ITask> = new Schema({
     },
     status: {
         type: String,
+        default: 'Pending',
         required: true
     },
     team: {

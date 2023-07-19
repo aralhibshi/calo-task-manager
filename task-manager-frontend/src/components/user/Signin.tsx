@@ -83,12 +83,12 @@ const Signin: React.FC<ISigninProps> = (props) => {
                           type="submit"
                           className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
                         >
-                          Login In
+                          Log In
                         </button>
                       </div>
 
                       <p className="text-center text-muted mt-5 mb-0">
-                        Forgot Password?
+                        Forgot Password? &nbsp; 
                         <a href="#!" className="fw-bold text-body">
                           <u>Click Here</u>
                         </a>

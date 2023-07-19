@@ -19,8 +19,16 @@ export interface INewUser {
     password: string; 
 }
 
+
 // UserLogin Interface
 export interface IUserLogin {
     emailAddress: string;
     password: string;
+}
+
+// UserToken Interface
+export interface IUserToken {
+    user: {
+        id: string;
+    }
 }

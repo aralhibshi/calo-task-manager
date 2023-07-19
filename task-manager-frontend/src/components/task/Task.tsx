@@ -8,7 +8,7 @@ import { ITaskProps } from '../../interfaces/ITaskProps';
 const Task: React.FC<ITaskProps> = (props) => {
 
   // Display Team Name
-  const teamName = typeof props.task.team === 'string' ? props.task.team : props.task.team.name;
+  // const teamName = typeof props.task.team === 'string' ? props.task.team : props.task.team.name;
 
   return (
     <>
@@ -48,7 +48,7 @@ const Task: React.FC<ITaskProps> = (props) => {
             {props.task.status}
           </MDBBadge>
         </td>
-        <td>{teamName}</td>
+        {/* <td>{teamName}</td> */}
         <td>
           <MDBBtn color='link' rounded size='sm'>
             Edit
