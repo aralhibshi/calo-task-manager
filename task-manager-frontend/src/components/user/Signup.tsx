@@ -1,27 +1,44 @@
 // Dependencies
 import React, { useState, ChangeEvent } from 'react';
+import {BrowserRouter as Router, useNavigate, NavigateFunction} from 'react-router-dom'
 
 // Interfaces
-import { IUser } from '../../interfaces/IUser';
+import { INewUser } from '../../interfaces/IUser';
 import { ISignupProps } from '../../interfaces/ISignupProps';
 
+// Used ChatGPT to indent properly to an 'Editor: Tab Size' of '2' Spaces
 const Signup: React.FC<ISignupProps> = (props) => {
-  
-  // States
-  const [newUser, setNewUser] = useState<IUser | any>()
+  // Navigate
+  const navigate: NavigateFunction = useNavigate();
 
-  // Change Handler to Save User Object to newUser State
+  // States
+  const [newUser, setNewUser] = useState<INewUser>({
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    password: ''
+  });
+
+  // Change Handler to Save User Object to useLogin State
   const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-    const user = {...newUser};
-    user[e.target.name] = e.target.value;
-    console.log(user);
+    const { name, value } = e.target;
+    const user: INewUser = {
+      ...newUser,
+      [name]: value,
+    };
     setNewUser(user);
-  }
+  };
 
   // Axios Post - Create User
-  const registerHandler = () => {
-    console.log(newUser);
+  const registerHandler = (): void => {
     props.register(newUser);
+  };
+
+  // Submit
+  const handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    registerHandler();
+    navigate('/signin');
   };
 
   return (
@@ -34,43 +51,68 @@ const Signup: React.FC<ISignupProps> = (props) => {
                 <div className="card-body p-5">
                   <h2 className="text-uppercase text-center mb-5">Create an account</h2>
 
-                  <form>
-
+                  <form onSubmit={handleSubmit}>
                     <div className="form-outline mb-4">
-                      <input type="text" id="form3Example1cg" className="form-control form-control-lg" onChange={changeHandler} placeholder='First Name' name='firstName' required/>
+                      <input
+                        type="text"
+                        id="form3Example1cg"
+                        className="form-control form-control-lg"
+                        onChange={changeHandler}
+                        placeholder="First Name"
+                        name="firstName"
+                        required
+                      />
                     </div>
 
                     <div className="form-outline mb-4">
-                      <input type="text" id="form3Example1cg" className="form-control form-control-lg" onChange={changeHandler} placeholder='Last Name' name='lastName' required/>
+                      <input
+                        type="text"
+                        id="form3Example1cg"
+                        className="form-control form-control-lg"
+                        onChange={changeHandler}
+                        placeholder="Last Name"
+                        name="lastName"
+                        required
+                      />
                     </div>
 
                     <div className="form-outline mb-4">
-                      <input type="email" id="form3Example3cg" className="form-control form-control-lg" onChange={changeHandler} placeholder='Email' name='emailAddress' required/>
+                      <input
+                        type="email"
+                        id="form3Example3cg"
+                        className="form-control form-control-lg"
+                        onChange={changeHandler}
+                        placeholder="Email"
+                        name="emailAddress"
+                        required
+                      />
                     </div>
 
                     <div className="form-outline mb-4">
-                      <input type="password" id="form3Example4cg" className="form-control form-control-lg" onChange={changeHandler} placeholder='Password' name='password' required/>
+                      <input
+                        type="password"
+                        id="form3Example4cg"
+                        className="form-control form-control-lg"
+                        onChange={changeHandler}
+                        placeholder="Password"
+                        name="password"
+                        required
+                      />
                     </div>
-
-                    {/* <div className="form-outline mb-4">
-                      <input type="password" id="form3Example4cdg" className="form-control form-control-lg" placeholder='Repeat Password' name='password'/>
-                    </div> */}
-
-                    {/* <div className="form-check d-flex justify-content-center mb-5">
-                      <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                      <label className="form-check-label" htmlFor="form2Example3g">
-                        I agree all statements in <a href="#!" className="text-body"><u>Terms of service</u></a>
-                      </label>
-                    </div> */}
 
                     <div className="d-flex justify-content-center">
-                      <button type="button" className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={registerHandler}>Register</button>
+                      <button
+                        type="submit"
+                        className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      >
+                        Register
+                      </button>
                     </div>
 
-                    <p className="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!" className="fw-bold text-body"><u>Login here</u></a></p>
-
+                    <p className="text-center text-muted mt-5 mb-0">
+                      Have already an account? <a href="#!" className="fw-bold text-body"><u>Login here</u></a>
+                    </p>
                   </form>
-
                 </div>
               </div>
             </div>

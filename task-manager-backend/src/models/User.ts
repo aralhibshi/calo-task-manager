@@ -28,12 +28,16 @@ const userSchema: Schema<IUser> = new Schema({
     },
     emailAddress: {
         type: String,
+        minlength: [6, '"Email Address" must be 6 or more characters'],
+        maxlength: [50, '"Email Address" cannot be more than 50 characters'],
         lowercase: true,
         unique: true,
         required: true,
     },
     password: {
         type: String,
+        minlength: [6, '"Password" must be 6 or more characters'],
+        maxlength: [100, '"Password" cannot be more than 100 characters'],
         required: true
     },
     teams: [{

@@ -10,3 +10,17 @@ export interface IUser {
     createdAt: Date;
     updatedAt: Date;
 }
+
+// NewUser Interface
+export interface INewUser {
+    firstName: string;
+    lastName: string;
+    emailAddress: string;
+    password: string; 
+}
+
+// UserLogin Interface
+export interface IUserLogin {
+    emailAddress: string;
+    password: string;
+}
