@@ -75,7 +75,8 @@ const TaskIndex: React.FC = () => {
             <th scope='col'>Description</th>
             <th scope='col'>Status</th>
             <th scope='col'>Team</th>
-            <th scope='col'>Actions</th>
+            <th scope='col'>Edit</th>
+            <th scope='col'>Delete</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>

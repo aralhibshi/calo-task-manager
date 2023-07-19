@@ -27,7 +27,7 @@ export const task_create_post = async (req: Request, res: Response): Promise<voi
             task._id,
             {
                 $push: {users: userId},
-                $set: {team: '64b7f85cc6dd5d07a7cca6cd'}
+                $set: {team: '64b81330c9b369b9ab87be95'}
             },
             {new: true}
         );
@@ -75,11 +75,12 @@ export const task_index_get = async (req: Request, res: Response): Promise<void>
 // Update - Task
 export const task_edit_post = async (req: Request, res: Response): Promise<void> => {
     try {
+        console.log(req.body)
+
         const task = await Task.findByIdAndUpdate(
             req.body.id,
             req.body
         );
-
         res.json({'message': 'Task Updated!', task}).status(200);
     }
     catch (err) {

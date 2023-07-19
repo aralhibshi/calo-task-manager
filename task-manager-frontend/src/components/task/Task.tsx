@@ -1,18 +1,39 @@
 // Dependencies
 import React from 'react'
 import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit';
+import {BrowserRouter as Router, Link, useNavigate, NavigateFunction} from 'react-router-dom';
+import Axios from 'axios';
+
+// Bootstrap
+import { Button } from 'react-bootstrap';
 
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
 
 const Task: React.FC<ITaskProps> = (props) => {
 
-  const editTask = () => {
-        
-  }
+  // Navigate// Navigate
+  const navigate: NavigateFunction = useNavigate();
+
+  // Edit Task Navigate
+  const editTaskClick = (): void => {
+    navigate(`/task/edit?id=${props.task._id}`)
+  };
+
+  // Axios Post - Delete Task
+  const deleteTask = (): void => {
+    Axios.post('/task/delete', {id: props.task._id})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    window.location.reload()
+  };
 
   // Display Team Name
-  // const teamName = typeof props.task.team === 'string' ? props.task.team : props.task.team.name;
+  const teamName = props.task.team.name;
 
   return (
     <>
@@ -37,7 +58,6 @@ const Task: React.FC<ITaskProps> = (props) => {
         </td>
         <td>
           <MDBBadge
-            // color='warning'
             color={
               props.task.status === 'complete'
               ? 'success'
@@ -52,11 +72,16 @@ const Task: React.FC<ITaskProps> = (props) => {
             {props.task.status}
           </MDBBadge>
         </td>
-        {/* <td>{teamName}</td> */}
+        <td>{teamName}</td>
         <td>
-          <MDBBtn color='link' rounded size='sm'>
+          <Button onClick={editTaskClick} variant='dark'>
             Edit
-          </MDBBtn>
+          </Button>
+        </td>
+        <td>
+          <Button type='submit' onClick={deleteTask} variant='danger'>
+            Delete
+          </Button>
         </td>
       </tr>
     </>

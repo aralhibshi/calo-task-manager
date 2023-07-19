@@ -8,7 +8,7 @@ export interface ITask {
     description: string;
     status: string;
     users: Array<string>
-    team: string | ITeam;
+    team: ITeam;
     createdAt: Date;
     updatedAt: Date;
 }
