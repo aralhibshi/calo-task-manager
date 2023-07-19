@@ -1,20 +1,29 @@
 // Dependencies
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, useContext, ChangeEvent} from 'react';
 import {BrowserRouter as Router, useNavigate, NavigateFunction} from 'react-router-dom';
+import Axios from 'axios';
 
 // Interfaces
 import { INewTask } from '../../interfaces/ITask'
-import { ITaskCreateProps } from '../../interfaces/ITaskCreateProps';
+import { IUserToken } from '../../interfaces/IUser';
 
-const TaskCreate: React.FC<ITaskCreateProps> = (props) => {
+// Context
+import UserIDContext from '../../contexts/UserIDContext';
+
+const TaskCreate: React.FC = () => {
 
   // Navigate
   const navigate: NavigateFunction = useNavigate();
 
+  // Context
+  const { userID } = useContext(UserIDContext);
+
+  // State
   const [newTask, setNewTask] = useState<INewTask>({
     title: '',
     description: ''
   });
+
 
   // Change Handler to Save Task Object to newTask State
   const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -24,19 +33,31 @@ const TaskCreate: React.FC<ITaskCreateProps> = (props) => {
       [name]: value,
     };
     setNewTask(task);
-    console.log(task)
+    console.log(task);
   };
 
-  // Axios Post - Task Create
-  const createTask = (): void => {
-    props.create(newTask);
+  // Axios Post - Create Task
+  const createTask = (task: INewTask, user: IUserToken): void => {
+    Axios.post('/task/add', {task, user})
+    .then(res => {
+
+      if (typeof userID !== 'undefined') {
+        console.log(userID)
+      }
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    createTask();
-    navigate('/task/index');
+    if (typeof userID !== 'undefined') {
+      createTask(newTask, userID);
+      navigate('/task/index');
+    }
   };
 
   return (

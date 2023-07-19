@@ -7,6 +7,10 @@ import { ITaskProps } from '../../interfaces/ITaskProps';
 
 const Task: React.FC<ITaskProps> = (props) => {
 
+  const editTask = () => {
+        
+  }
+
   // Display Team Name
   // const teamName = typeof props.task.team === 'string' ? props.task.team : props.task.team.name;
 
@@ -59,4 +63,4 @@ const Task: React.FC<ITaskProps> = (props) => {
   )
 }
 
-export default Task
+export default Task;
