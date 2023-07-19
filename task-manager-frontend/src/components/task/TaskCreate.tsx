@@ -1,11 +1,12 @@
 // Dependencies
-import React, {useState, useContext, ChangeEvent} from 'react';
+import React, {useState, useEffect, useContext, ChangeEvent, Fragment} from 'react';
 import {BrowserRouter as Router, useNavigate, NavigateFunction} from 'react-router-dom';
 import Axios from 'axios';
 
 // Interfaces
 import { INewTask } from '../../interfaces/ITask'
 import { IUserToken } from '../../interfaces/IUser';
+import { ITeam } from '../../interfaces/ITeam';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
@@ -19,10 +20,18 @@ const TaskCreate: React.FC = () => {
   const { userID } = useContext(UserIDContext);
 
   // State
+  const [teams, setTeams] = useState<Array<ITeam>>();
+  const [teamOption, setTeamOption] = useState<string>();
   const [newTask, setNewTask] = useState<INewTask>({
     title: '',
     description: ''
   });
+
+  useEffect(() => {
+    if (typeof userID !== 'undefined') {
+      userTeams();
+    }
+  }, [userID])
 
   // Change Handler to Save Task Object to newTask State
   const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -33,6 +42,27 @@ const TaskCreate: React.FC = () => {
     };
     setNewTask(task);
     console.log(task);
+  };
+
+  // Change Handler for Team Select Element
+  const selectChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
+    setTeamOption(e.target.value);
+  };
+
+  // Axios Get - User's Teams
+  const userTeams = (): void => {
+    if (typeof userID !== 'undefined') {
+      Axios.get(`/team/user/index?id=${userID?.user.id}`)
+      .then(res => {
+        console.log(res.data);
+  
+        let allTeams = res.data;
+        setTeams(allTeams)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   };
 
   // Axios Post - Create Task
@@ -57,6 +87,19 @@ const TaskCreate: React.FC = () => {
       navigate('/task/index');
     }
   };
+
+  // Map Through and Display Each Task
+  const showAllTeams = (): JSX.Element[] | undefined => {
+    if (typeof teams !== 'undefined') {
+      return teams.map((teamEl, index) => {
+        return (
+          <Fragment key={index}>
+            <option value={teamEl.name}>{teamEl.name}</option>
+          </Fragment>
+        )
+      })
+    }
+  }
 
   return (
     <div>
@@ -92,6 +135,19 @@ const TaskCreate: React.FC = () => {
                           name="description"
                           required
                         />
+                      </div>
+
+                      <div className='form-outline mb-4'>
+                        <select
+                          id="form3Example1cg"
+                          className="form-control form-control-lg"
+                          value={teamOption}
+                          onChange={selectChangeHandler}
+                          name="teams"
+                          multiple
+                        >
+                          {showAllTeams()}
+                        </select>
                       </div>
 
                       <div className="d-flex justify-content-center">

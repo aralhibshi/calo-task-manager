@@ -66,6 +66,18 @@ export const team_index_get = async (req: Request, res: Response): Promise<void>
     }
 }
 
+// Read - Team (User's Teams)
+export const team_user_index_get = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const teams = await User.findById(req.query.id).populate('teams');
+        res.json(teams?.teams).status(200);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({'message': err}).status(400);
+    }
+}
+
 // Update - Team (If User is Owner)
 export const team_edit_post = async (req: Request, res: Response): Promise<void> => {
     try {
