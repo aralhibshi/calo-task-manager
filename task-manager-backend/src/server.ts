@@ -2,12 +2,16 @@
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
 import session, { SessionOptions } from 'express-session';
+import dotenv from 'dotenv';
+
+// Dotenv
+dotenv.config();
+
+// Port
+const port: string | undefined = process.env.PORT;
 
 // Passport Configuration
 import passport from './lib/passportConfig';
-
-const PORT: number = 4000;
-
 // Initialize App
 const app: Express = express();
 
@@ -47,15 +51,20 @@ app.use('/', taskRoute);
 app.use('/', teamRoute);
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Backend Running on PORT ${PORT}`)
+app.listen(port, () => {
+    console.log(`Backend Running on PORT ${port}`)
 });
 
+// MongoDB URL
+const mongoURL: string | undefined = process.env.MONGODBURL;
+
 // DB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/taskManager')
-.then(() => {
-    console.log('Mongoose Connected to MongoDB')
-})
-.catch((err) => {
-    console.log('Error Occurred', err)
-});
+if (typeof mongoURL !== 'undefined') {
+    mongoose.connect(mongoURL)
+    .then(() => {
+        console.log('Mongoose Connected to MongoDB')
+    })
+    .catch((err) => {
+        console.log('Error Occurred', err)
+    });
+}

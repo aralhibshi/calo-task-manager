@@ -18,7 +18,7 @@ export const task_create_post = async (req: Request, res: Response): Promise<voi
         await task.save();
 
         // IDs
-        const userId: string = req.body.user.user.id;
+        const userId: string = req.body.user ? req.body.user.user.id : req.body.id;
         const teamId: string = '';
 
         // Push User ID to 'users' in New Task

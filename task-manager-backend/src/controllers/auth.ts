@@ -3,6 +3,10 @@ import { Request, Response } from 'express'
 import { Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
+
+// Dotenv
+dotenv.config();
 
 // Model/Schema and Interface
 import { IUser, UserModel } from '../models/User';
@@ -61,9 +65,11 @@ export const auth_signin_post = async (req: Request, res: Response): Promise<voi
                 };
 
                 // Generate JWT
+                const secret: string = process.env.SECRET!;
+
                 jwt.sign(
                     payload,
-                    "SUPERSECRET",
+                    secret,
                     { expiresIn: 36000000 },
                     (err, token) => {
                         if (err) throw err;
