@@ -1,52 +1,42 @@
 // Dependencies
-import React, { useState, useEffect, Fragment, ChangeEvent } from 'react';
-import Axios from 'axios';
+import React, { useState, useContext, Fragment, ChangeEvent } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 // Components
 import Task from './Task';
 
-// Interfaces
-import { ITask } from '../../interfaces/ITask';
+// Context
+import UserIDContext from '../../contexts/UserIDContext';
+
+// Custom Hooks
+import useUserTasks from '../../customHooks/useUserTasks';
 
 const TaskIndex: React.FC = () => {
 
+   // Context
+   const { userID } = useContext(UserIDContext);
+
+   const tasks = useUserTasks(userID);
+
   // States
   const [limit, setLimit] = useState<number>(10);
-  const [tasks, setTasks] = useState<Array<ITask>>([]);
-
-  // Get All Tasks on Load
-  useEffect(() => {
-    getAllTasks();
-  }, [limit]);
 
   const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>): void => {
     const newLimit = parseInt(e.target.value, 10);
     setLimit(newLimit);
   };
 
-  // Axios Get - All Tasks
-  const getAllTasks = async (): Promise<void> => {
-    await Axios.get<ITask[]>(`/task/index?limit=${limit}'`)
-    .then(res => {
-      console.log(res.data)
-      setTasks(res.data);
-    })
-    .catch(err => {
-      console.log('Cannot Get Tasks with Axios');
-      console.log(err);
-    })
-  };
-
   // Map Through and Display Each Task
-  const showAllTasks = (): JSX.Element[] => {
-    return tasks.map((taskEl, index) => {
-      return (
-        <Fragment key={index}>
-          <Task task={taskEl}/>
-        </Fragment>
-      )
-    })
+  const showAllTasks = (): JSX.Element[] | undefined => {
+    if (typeof tasks !== 'undefined') {
+      return tasks.map((taskEl, index) => {
+        return (
+          <Fragment key={index}>
+            <Task task={taskEl}/>
+          </Fragment>
+        )
+      })
+    }
   }
 
   return (

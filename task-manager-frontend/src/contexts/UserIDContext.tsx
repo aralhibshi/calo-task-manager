@@ -1,12 +1,12 @@
 // Dependencies
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext } from 'react';
 
 // Interfaces
 import { IUserToken } from '../interfaces/IUser';
 
 // UserIDContext Interface
 interface UserIDContextType {
-  userID: IUserToken | undefined;
+  userID: IUserToken | undefined | any;
   setUserID: React.Dispatch<React.SetStateAction<IUserToken | undefined>>;
 };
 

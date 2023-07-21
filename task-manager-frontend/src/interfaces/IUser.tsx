@@ -1,3 +1,5 @@
+import { ITask } from "./ITask";
+
 // User Interface
 export interface IUser {
     _id: string;
@@ -5,7 +7,7 @@ export interface IUser {
     lastName: string;
     emailAddress: string;
     password: string;
-    teams: Array<string>;
+    teams: Array<string> | Array<ITask>;
     tasks: Array<string>;
     createdAt: Date;
     updatedAt: Date;

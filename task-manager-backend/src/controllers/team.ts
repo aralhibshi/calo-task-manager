@@ -14,16 +14,22 @@ const User: Model<IUser> = UserModel;
 export const team_create_post = async (req: Request, res: Response): Promise<void> => {
     try {
         // Create Team
-        const team: ITeam = new Team(req.body);
+        const team: ITeam = new Team(req.body.team);
         await team.save();
+
+        // IDs
+        const userID: string = req.body.user ? req.body.user.user.id : req.body.id;
+        const teamID: string = team._id;
+
+        console.log(userID);
 
         // Push Current User ID to 'users' in New Team
         await Team.findByIdAndUpdate(
-            team._id,
+            teamID,
             {
                 $push: {
                     users: {
-                        user: '64b7c840364a0c66653ab2bd',
+                        user: userID,
                         isOwner: true
                     }
                 }
@@ -33,8 +39,8 @@ export const team_create_post = async (req: Request, res: Response): Promise<voi
 
         // Push Team ID to 'teams' in User
         const user: IUser | null = await User.findByIdAndUpdate(
-            '64b7c840364a0c66653ab2bd',
-            {$push: {teams: team._id}},
+            userID,
+            {$push: {teams: teamID}},
             {new: true}
         );
 
@@ -42,6 +48,7 @@ export const team_create_post = async (req: Request, res: Response): Promise<voi
     }
     catch (err) {
         console.log('Error Creating Team');
+        console.log(err);
         res.json({'message': err}).status(400);
     }
 }
