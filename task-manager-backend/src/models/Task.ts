@@ -29,7 +29,7 @@ const taskSchema: Schema<ITask> = new Schema({
     },
     team: {
         type: Schema.Types.ObjectId,
-        ref: 'Team'
+        ref: 'Team',
     },
     users: [{
         type: Schema.Types.ObjectId,

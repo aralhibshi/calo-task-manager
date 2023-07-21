@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react'
+import React, { useContext } from 'react'
 import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit';
 import {BrowserRouter as Router, Link, useNavigate, NavigateFunction} from 'react-router-dom';
 import Axios from 'axios';
@@ -10,10 +10,16 @@ import { Button } from 'react-bootstrap';
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
 
+// Contexts
+import UserIDContext from '../../contexts/UserIDContext';
+
 const Task: React.FC<ITaskProps> = (props) => {
 
   // Navigate// Navigate
   const navigate: NavigateFunction = useNavigate();
+
+  // Context
+  const { userID } = useContext(UserIDContext);
 
   // Edit Task Navigate
   const editTaskClick = (): void => {
@@ -22,7 +28,7 @@ const Task: React.FC<ITaskProps> = (props) => {
 
   // Axios Post - Delete Task
   const deleteTask = (): void => {
-    Axios.post('/task/delete', {id: props.task._id})
+    Axios.post(`/task/delete?id=${userID.user.id}`, {id: props.task._id})
     .then(res => {
       console.log(res);
     })

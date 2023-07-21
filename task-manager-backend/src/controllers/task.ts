@@ -10,6 +10,10 @@ const Task: Model<ITask> = TaskModel;
 import { IUser, UserModel } from '../models/User';
 const User: Model<IUser> = UserModel;
 
+// Team Model/Schema and Interface
+import { ITeam, TeamModel } from '../models/Team';
+const Team: Model<ITeam> = TeamModel;
+
 // Create - Task (M-M, Tasks and Users)
 export const task_create_post = async (req: Request | any, res: Response): Promise<void> => {
     try {
@@ -17,18 +21,20 @@ export const task_create_post = async (req: Request | any, res: Response): Promi
         const task: ITask = new Task(req.body.task);
         await task.save();
 
+        // Find Task
+        const team: ITeam | any = await Team.findById(req.body.task.team)
+
         // IDs
         const userId: string = req.query.id!;
         const taskId: string = task._id;
+        const teamId: string = team._id;
 
-        console.log('taskID!', task._id)
-
-        // Push User ID to 'users' in New Task
+        // Push User ID to 'users' in New Task and Set Selected Team
         await Task.findByIdAndUpdate(
             taskId,
             {
                 $push: {users: userId},
-                $set: {team: '64b92f3550b4eaeb429c8333'}
+                $set: {team: teamId}
             },
             {new: true}
         );
@@ -42,7 +48,7 @@ export const task_create_post = async (req: Request | any, res: Response): Promi
             {new: true}
         );
 
-        res.json({'message': {task}}).status(200);
+        res.json({'message': {task, team}}).status(200);
     }
     catch (err) {
         console.log('Error Creating Task');
@@ -79,8 +85,15 @@ export const task_index_get = async (req: Request, res: Response): Promise<void>
 // Read - Task (User's Tasks)
 export const task_user_index_get = async (req: Request, res: Response): Promise<void> => {
     try {
-        const tasks = await User.findById(req.query.id).populate('tasks');
-        res.json(tasks?.tasks).status(200);
+        const user = await User.findById(req.query.id).populate('tasks');
+
+        const tasks = user?.tasks;
+
+        if (tasks) {
+            await Task.populate(tasks, { path: 'team' });
+        }
+
+        res.json(tasks).status(200);
     }
     catch (err) {
         console.log(err);
@@ -108,7 +121,17 @@ export const task_edit_post = async (req: Request, res: Response): Promise<void>
 // Delete - Task
 export const task_delete_post = async (req: Request, res: Response): Promise<void> => {
     try {
-        // Find Task in User and Delete
+        // IDs
+        const userId = req.query.id;
+        const taskId = req.body.id;
+
+        // Find Task in User and Pull/Delete
+        await User.findByIdAndUpdate(
+            userId!,
+            {
+                $pull: { tasks: taskId}
+            }
+        )
 
         // Find Task and Delete
         const task = await Task.findByIdAndDelete(req.body.id);
