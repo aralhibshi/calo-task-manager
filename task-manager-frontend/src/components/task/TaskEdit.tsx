@@ -1,33 +1,45 @@
 // Dependencies
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import {BrowserRouter as Router, useNavigate, NavigateFunction} from 'react-router-dom';
+import React, { useState, useContext, ChangeEvent, Fragment }  from 'react';
+import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
 
 // Interfaces
-import { INewTask } from '../../interfaces/ITask';
+import { ITaskProps } from '../../interfaces/ITaskProps';
+import { INewTask, ITask } from '../../interfaces/ITask'
+import { ITeam } from '../../interfaces/ITeam';
 
-const TaskEdit: React.FC = () => {
+// Context
+import UserIDContext from '../../contexts/UserIDContext';
 
-  // Navigate
-  const navigate: NavigateFunction = useNavigate();
+// Custom Hooks
+import useUserTeams from '../../customHooks/useUserTeams';
+
+const TaskEdit: React.FC<ITaskProps> = (props) => {
 
   // States
-  const [taskID, setTaskID] = useState<string>()
+  const [show, setShow] = useState(false);
   const [updatedTask, setUpdatedTask] = useState<INewTask>({
-    title: '',
-    description: '',
-    team: ''
+    title: props.task.title,
+    description: props.task.description,
+    status: props.task.status,
+    team: props.task.team._id,
   });
 
-  // Get ID Query for Task
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    
-    if (id) {
-      setTaskID(id);
-    }
-  }, []);
+  // Context
+  const { userID } = useContext(UserIDContext);
+
+   // Custom Hooks
+   const teams: any = useUserTeams(userID);
+
+   // Handle Show Modal
+   const handleShow = (): void => {
+    setShow(true);
+  };
+
+  // Handle Close Modal
+  const handleClose = (): void => {
+    setShow(false);
+  };
 
   // Change Handler to Save Task Object to newTask State
   const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -40,81 +52,139 @@ const TaskEdit: React.FC = () => {
     console.log(task);
   };
 
-  // Axios Post - Update Task
-  const updateTask = (taskID: string, task: INewTask): void => {
+  // Change Handler for Team Select Element
+  const teamChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
+    const selectedValue = e.target.value;
+    const task = { ...updatedTask };
+    task.team = selectedValue;
+    setUpdatedTask(task);
+    console.log(task)
+  };
 
-    console.log(taskID, task)
-    Axios.post('/task/edit', {taskID, task})
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  // Change Handler for Team Select Element
+  const statusChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
+    const selectedValue = e.target.value;
+    const task = { ...updatedTask };
+    task.status = selectedValue;
+    setUpdatedTask(task);
+    console.log(task)
+  };
+
+  // Map Through and Display Each Task
+  const showAllTeams = (): JSX.Element[] | undefined => {
+    if (typeof teams !== 'undefined') {
+      return teams.map((teamEl: ITeam, index: number) => {
+        return (
+          <Fragment key={index}>
+            <option value={teamEl._id}>{teamEl.name}</option>
+          </Fragment>
+        )
+      })
+    }
+  }
+
+  // Axios Post - Task Edit
+  const updateTask = (task: INewTask) => {
+      Axios.post(`/task/edit?id=${props.task._id}`, {task})
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    if (typeof taskID !== 'undefined') {
-      updateTask(taskID, updatedTask);
-      navigate('/task/index');
-    }
-  };
+    updateTask(updatedTask);
+    handleClose();
+  }
 
   return (
-    <div>
-      <section className="vh-100 bg-image custom-font" style={{ backgroundImage: `url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')` }}>
-        <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-          <div className="container h-100">
-            <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                <div className="card" style={{ borderRadius: '15px' }}>
-                  <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">Edit Task</h2>
+    <>
+      {/* <Button variant="dark" onClick={handleShow}>
+        Edit
+      </Button> */}
 
-                    <form onSubmit={handleSubmit}>
-                      <div className="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Example1cg"
-                          className="form-control form-control-lg"
-                          onChange={changeHandler}
-                          placeholder="Title"
-                          name="title"
-                          required
-                        />
-                      </div>
+      <i className="fa fa-pencil" aria-hidden="true" onClick={handleShow}></i>
 
-                      <div className="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Example1cg"
-                          className="form-control form-control-lg"
-                          onChange={changeHandler}
-                          placeholder="Description"
-                          name="description"
-                          required
-                        />
-                      </div>
-
-                      <div className="d-flex justify-content-center">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Document</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="card-body p-5">
+            <form onSubmit={handleSubmit}>
+              <div className="form-outline mb-4">
+                <label className='text-muted'>Title</label>
+                <input
+                  type="text"
+                  id="form3Example1cg"
+                  className="form-control form-control-lg"
+                  onChange={changeHandler}
+                  placeholder="Title"
+                  name="title"
+                  defaultValue={props.task.title}
+                  required
+                />
               </div>
-            </div>
+
+              <div className="form-outline mb-4">
+                <label className='text-muted'>Description</label>
+                <input
+                  type="text"
+                  id="form3Example1cg"
+                  className="form-control form-control-lg"
+                  onChange={changeHandler}
+                  placeholder="Description"
+                  name="description"
+                  defaultValue={props.task.description}
+                  required
+                />
+              </div>
+
+              <div className='form-outline mb-4'>
+                <label className='text-muted'>Status</label>
+                <select
+                  id="form3Example1cg"
+                  className="form-control form-control-lg"
+                  onChange={statusChangeHandler}
+                  name="status"
+                  defaultValue={props.task.status}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Incomplete">Incomplete</option>
+                  <option value="Complete">Complete</option>
+                </select>
+              </div>
+
+              <div className='form-outline mb-4'>
+                <label className='text-muted'>Team</label>
+                <select
+                  id="form3Example1cg"
+                  className="form-control form-control-lg"
+                  onChange={teamChangeHandler}
+                  name="team"
+                  defaultValue={props.task.team.name}
+                >
+                  {showAllTeams()}
+                </select>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <button
+                  type="submit"
+                  className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      </section>
-    </div>
+        </Modal.Body>
+      </Modal>
+    </>
   )
 };
 

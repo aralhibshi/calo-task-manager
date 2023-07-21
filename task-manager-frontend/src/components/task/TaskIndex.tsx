@@ -5,6 +5,9 @@ import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 // Components
 import Task from './Task';
 
+// Bootstrap and CSS
+import 'font-awesome/css/font-awesome.min.css';
+
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
 

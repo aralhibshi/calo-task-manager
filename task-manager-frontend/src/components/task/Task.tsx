@@ -1,11 +1,10 @@
 // Dependencies
 import React, { useContext } from 'react'
-import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit';
-import {BrowserRouter as Router, Link, useNavigate, NavigateFunction} from 'react-router-dom';
+import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
 
-// Bootstrap
-import { Button } from 'react-bootstrap';
+// Components
+import TaskEditModal from './TaskEdit';
 
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
@@ -15,16 +14,8 @@ import UserIDContext from '../../contexts/UserIDContext';
 
 const Task: React.FC<ITaskProps> = (props) => {
 
-  // Navigate// Navigate
-  const navigate: NavigateFunction = useNavigate();
-
   // Context
   const { userID } = useContext(UserIDContext);
-
-  // Edit Task Navigate
-  const editTaskClick = (): void => {
-    navigate(`/task/edit?id=${props.task._id}`)
-  };
 
   // Axios Post - Delete Task
   const deleteTask = (): void => {
@@ -54,22 +45,25 @@ const Task: React.FC<ITaskProps> = (props) => {
             />
             <div className='ms-3'>
               <p className='fw-bold mb-1'>{props.task.title}</p>
-              {/* <p className='text-muted mb-0'>john.doe@gmail.com</p> */}
+              <p className='text-muted mb-0'>
+                <i className="fa fa-user" aria-hidden="true"></i>
+                &nbsp; {props.task.users.length}
+              </p>
             </div>
           </div>
         </td>
         <td>
           <p className='fw-normal mb-1'>{props.task.description}</p>
-          {/* <p className='text-muted mb-0'>IT department</p> */}
+          <p className='text-muted mb-0'>IT department</p>
         </td>
         <td>
           <MDBBadge
             color={
-              props.task.status === 'complete'
+              props.task.status === 'Complete'
               ? 'success'
-              : props.task.status === 'pending'
+              : props.task.status === 'Pending'
               ? 'warning'
-              : props.task.status === 'incomplete'
+              : props.task.status === 'Incomplete'
               ? 'danger'
               : 'warning'
             }
@@ -80,14 +74,14 @@ const Task: React.FC<ITaskProps> = (props) => {
         </td>
         <td>{teamName}</td>
         <td>
-          <Button onClick={editTaskClick} variant='dark'>
-            Edit
-          </Button>
+          <TaskEditModal task={props.task}/>
         </td>
         <td>
-          <Button type='submit' onClick={deleteTask} variant='danger'>
+          {/* <Button type='submit' onClick={deleteTask} variant='danger'>
             Delete
-          </Button>
+          </Button> */}
+          <i className="fa fa-trash" aria-hidden="true" onClick={deleteTask}></i>
+
         </td>
       </tr>
     </>

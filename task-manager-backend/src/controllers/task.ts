@@ -104,10 +104,8 @@ export const task_user_index_get = async (req: Request, res: Response): Promise<
 // Update - Task
 export const task_edit_post = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log(req.body)
-
         const task = await Task.findByIdAndUpdate(
-            req.body.taskID,
+            req.query.id,
             req.body.task
         );
         res.json({'message': 'Task Updated!', task}).status(200);

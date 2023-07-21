@@ -16,7 +16,6 @@ import Signup from './components/user/Signup';
 import Signin from './components/user/Signin';
 import TaskCreate from './components/task/TaskCreate';
 import TaskIndex from './components/task/TaskIndex'
-import TaskEdit from './components/task/TaskEdit';
 import TeamCreate from './components/team/TeamCreate';
 
 // Interfaces
@@ -134,10 +133,6 @@ const App: React.FC = () => {
           <Route
             path='/task/index'
             element={<TaskIndex/>}
-          />
-          <Route
-            path='/task/edit'
-            element={<TaskEdit/>}
           />
           <Route
             path='/team/add'
