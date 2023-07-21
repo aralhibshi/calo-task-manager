@@ -17,5 +17,6 @@ export interface ITask {
 export interface INewTask {
     title: string;
     description: string;
+    status?: string;
     team: string;
 }
