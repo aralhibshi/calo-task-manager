@@ -17,10 +17,10 @@ import Signin from './components/user/Signin';
 import TaskCreate from './components/task/TaskCreate';
 import TaskIndex from './components/task/TaskIndex'
 import TaskEdit from './components/task/TaskEdit';
+import TeamCreate from './components/team/TeamCreate';
 
 // Interfaces
 import { IUserToken } from './interfaces/IUser';
-import { INewTask } from './interfaces/ITask';
 
 // Context
 import UserIDContext from './contexts/UserIDContext';
@@ -138,6 +138,10 @@ const App: React.FC = () => {
           <Route
             path='/task/edit'
             element={<TaskEdit/>}
+          />
+          <Route
+            path='/team/add'
+            element={<TeamCreate/>}
           />
         </Routes>
       </div>

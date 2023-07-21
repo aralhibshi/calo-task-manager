@@ -1,51 +1,49 @@
 // Dependencies
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, {useState, useContext, ChangeEvent, Fragment} from 'react';
 import {BrowserRouter as Router, useNavigate, NavigateFunction} from 'react-router-dom';
 import Axios from 'axios';
 
 // Interfaces
-import { INewTask } from '../../interfaces/ITask';
+import { INewTeam } from '../../interfaces/ITeam';
+import { IUserToken } from '../../interfaces/IUser';
+import { ITeam } from '../../interfaces/ITeam';
 
-const TaskEdit: React.FC = () => {
+// Context
+import UserIDContext from '../../contexts/UserIDContext';
+
+const TeamCreate: React.FC = () => {
 
   // Navigate
   const navigate: NavigateFunction = useNavigate();
 
-  // States
-  const [taskID, setTaskID] = useState<string>()
-  const [updatedTask, setUpdatedTask] = useState<INewTask>({
-    title: '',
-    description: '',
-    team: ''
-  });
+  // Context
+  const { userID } = useContext(UserIDContext);
 
-  // Get ID Query for Task
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    
-    if (id) {
-      setTaskID(id);
-    }
-  }, []);
+  // State
+  const [newTeam, setNewTeam] = useState<INewTeam>({
+    name: '',
+    description: ''
+  });
 
   // Change Handler to Save Task Object to newTask State
   const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    const task: INewTask = {
-      ...updatedTask,
+    const team: INewTeam = {
+      ...newTeam,
       [name]: value,
     };
-    setUpdatedTask(task);
-    console.log(task);
+    setNewTeam(team);
+    console.log(team);
   };
 
-  // Axios Post - Update Task
-  const updateTask = (taskID: string, task: INewTask): void => {
-
-    console.log(taskID, task)
-    Axios.post('/task/edit', {taskID, task})
+  // Axios Post - Create Task
+  const createTeam = (user: IUserToken, team: INewTeam,): void => {
+    console.log(user, team);
+    Axios.post('/team/add', {user, team})
     .then(res => {
+      if (typeof userID !== 'undefined') {
+        console.log(userID)
+      }
       console.log(res)
     })
     .catch(err => {
@@ -56,8 +54,8 @@ const TaskEdit: React.FC = () => {
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    if (typeof taskID !== 'undefined') {
-      updateTask(taskID, updatedTask);
+    if (typeof userID !== 'undefined') {
+      createTeam(userID, newTeam);
       navigate('/task/index');
     }
   };
@@ -71,7 +69,7 @@ const TaskEdit: React.FC = () => {
               <div className="col-12 col-md-9 col-lg-7 col-xl-6">
                 <div className="card" style={{ borderRadius: '15px' }}>
                   <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">Edit Task</h2>
+                    <h2 className="text-uppercase text-center mb-5">Add a Team</h2>
 
                     <form onSubmit={handleSubmit}>
                       <div className="form-outline mb-4">
@@ -80,8 +78,8 @@ const TaskEdit: React.FC = () => {
                           id="form3Example1cg"
                           className="form-control form-control-lg"
                           onChange={changeHandler}
-                          placeholder="Title"
-                          name="title"
+                          placeholder="Name"
+                          name="name"
                           required
                         />
                       </div>
@@ -97,7 +95,6 @@ const TaskEdit: React.FC = () => {
                           required
                         />
                       </div>
-
                       <div className="d-flex justify-content-center">
                         <button
                           type="submit"
@@ -116,6 +113,6 @@ const TaskEdit: React.FC = () => {
       </section>
     </div>
   )
-};
+}
 
-export default TaskEdit;
+export default TeamCreate;

@@ -56,15 +56,13 @@ app.listen(port, () => {
 });
 
 // MongoDB URL
-const mongoURL: string | undefined = process.env.MONGODBURL;
+const mongoURL: string = process.env.MONGOLOCAL!;
 
 // DB Connection
-if (typeof mongoURL !== 'undefined') {
-    mongoose.connect(mongoURL)
-    .then(() => {
-        console.log('Mongoose Connected to MongoDB')
-    })
-    .catch((err) => {
-        console.log('Error Occurred', err)
-    });
-}
+mongoose.connect(mongoURL)
+.then(() => {
+    console.log('Mongoose Connected to MongoDB')
+})
+.catch((err) => {
+    console.log('Error Occurred', err)
+});

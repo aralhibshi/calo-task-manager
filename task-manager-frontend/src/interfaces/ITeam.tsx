@@ -7,3 +7,9 @@ export interface ITeam {
     createdAt: Date;
     updatedAt: Date;
 }
+
+// New Team Interface
+export interface INewTeam {
+    name: string;
+    description: string;
+}
