@@ -3,7 +3,10 @@ import { Request, Response } from 'express'
 import { Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+
+// Interfaces
+import { IPayload } from '../interfaces/IPayload';
 
 // Dotenv
 dotenv.config();
@@ -50,16 +53,8 @@ export const auth_signin_post = async (req: Request, res: Response): Promise<voi
                 res.json({'message': 'Wrong Password!'}).status(400);
             } else {
 
-                // Payload Interface for JWT
-                interface Payload {
-                    user:  {
-                        id: string;
-                        name: string;
-                    }
-                };
-
                 // Payload
-                const payload: Payload = {
+                const payload: IPayload = {
                     user: {
                         id: user._id,
                         name: user.firstName

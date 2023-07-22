@@ -15,18 +15,25 @@ const Profile: React.FC = () => {
   const user = useUserDetail(userID);
 
   // User Date
-  const createdAt: string | undefined= user?.createdAt?.toString()
-  const date: any = createdAt ? new Date(createdAt): null;
+  // const createdAt: string | undefined= user?.createdAt?.toString()
+  // const date: any = createdAt ? new Date(createdAt): null;
 
-  const year = createdAt ? date.getFullYear(): null;
-  const month = createdAt ? date.getMonth() + 1: null;
-  const day = createdAt ? date.getDate(): null;
-  const fullDate = createdAt ? `${year}-${month}-${day}`: null
+  // const year = createdAt ? date.getFullYear(): null;
+  // const month = createdAt ? date.getMonth() + 1: null;
+  // const day = createdAt ? date.getDate(): null;
+  // const fullDate = createdAt ? `${month}-${day}-${year}`: null
 
+  // User Date
+  const createdAt: string | undefined = user?.createdAt?.toString();
+  const date: any = createdAt ? new Date(createdAt) : null;
 
-  useEffect(() => {
-    console.log(date)
-  })
+  const fullDate = createdAt
+  ? date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
 
   return (
     <div>
@@ -80,17 +87,6 @@ const Profile: React.FC = () => {
                         <h6>Teams</h6>
                         <p className="text-muted">{user?.teams.length}</p>
                       </div>
-                    </div>
-                    <div className="d-flex justify-content-start">
-                      <a href="#!">
-                        <i className="fab fa-facebook-f fa-lg me-3"></i>
-                      </a>
-                      <a href="#!">
-                        <i className="fab fa-twitter fa-lg me-3"></i>
-                      </a>
-                      <a href="#!">
-                        <i className="fab fa-instagram fa-lg"></i>
-                      </a>
                     </div>
                   </div>
                 </div>

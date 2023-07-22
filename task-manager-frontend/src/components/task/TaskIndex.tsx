@@ -22,13 +22,14 @@ const TaskIndex: React.FC = () => {
   //  Custom Hook
    const tasks = useUserTasks(userID);
 
-  // States
-  const [limit, setLimit] = useState<number>(10);
+  // // States
+  // const [limit, setLimit] = useState<number>(10);
 
-  const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>): void => {
-    const newLimit = parseInt(e.target.value, 10);
-    setLimit(newLimit);
-  };
+  // // Limit Change
+  // const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+  //   const newLimit = parseInt(e.target.value, 10);
+  //   setLimit(newLimit);
+  // };
 
   // Map Through and Display Each Task
   const showAllTasks = (): JSX.Element[] | undefined => {
@@ -138,11 +139,6 @@ const TaskIndex: React.FC = () => {
             >
               Delete
             </th>
-            {/* <th scope='col'>Description</th>
-            <th scope='col'>Status</th> */}
-            {/* <th scope='col'>Team</th> */}
-            {/* <th scope='col'>Edit</th> */}
-            {/* <th scope='col'>Delete</th> */}
           </tr>
         </MDBTableHead>
         <MDBTableBody>

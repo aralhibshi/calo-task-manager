@@ -86,7 +86,6 @@ export const task_index_get = async (req: Request, res: Response): Promise<void>
 export const task_user_index_get = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await User.findById(req.query.id).populate('tasks');
-
         const tasks = user?.tasks;
 
         if (tasks) {

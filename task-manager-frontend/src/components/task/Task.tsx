@@ -57,7 +57,7 @@ const Task: React.FC<ITaskProps> = (props) => {
         </td>
         <td>
           <p className='fw-normal mb-1'>{props.task.description}</p>
-          <p className='text-muted mb-0'>IT department</p>
+          <p className='text-muted mb-0'><em>tags go here</em></p>
         </td>
         <td>
           <MDBBadge
@@ -80,11 +80,7 @@ const Task: React.FC<ITaskProps> = (props) => {
           <TaskEditModal task={props.task}/>
         </td>
         <td className='align-middle'>
-          {/* <Button type='submit' onClick={deleteTask} variant='danger'>
-            Delete
-          </Button> */}
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
-
         </td>
       </tr>
     </>
