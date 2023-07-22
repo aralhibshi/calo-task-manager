@@ -32,5 +32,6 @@ export interface IUserLogin {
 export interface IUserToken {
     user: {
         id: string;
+        name: string;
     }
 }

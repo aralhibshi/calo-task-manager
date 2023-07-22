@@ -6,6 +6,9 @@ import Axios from 'axios';
 // Components
 import TaskEditModal from './TaskEdit';
 
+// Boostrap and CSS
+import Button from 'react-bootstrap/Button';
+
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
 
@@ -76,11 +79,11 @@ const Task: React.FC<ITaskProps> = (props) => {
         <td>
           <TaskEditModal task={props.task}/>
         </td>
-        <td>
+        <td className='align-middle'>
           {/* <Button type='submit' onClick={deleteTask} variant='danger'>
             Delete
           </Button> */}
-          <i className="fa fa-trash" aria-hidden="true" onClick={deleteTask}></i>
+          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
 
         </td>
       </tr>

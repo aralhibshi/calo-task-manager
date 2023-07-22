@@ -36,7 +36,7 @@ const Signin: React.FC<ISigninProps> = (props) => {
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     loginHandler();
-    navigate('/');
+    navigate('/task/index');
   };
 
   return (
@@ -51,7 +51,7 @@ const Signin: React.FC<ISigninProps> = (props) => {
               <div className="col-12 col-md-9 col-lg-7 col-xl-6">
                 <div className="card" style={{ borderRadius: '15px' }}>
                   <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">Create an account</h2>
+                    <h2 className="text-uppercase text-center mb-5">Sign In</h2>
 
                     <form onSubmit={handleSubmit}>
                       <div className="form-outline mb-4">

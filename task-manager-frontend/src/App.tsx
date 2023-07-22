@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, NavigateFunction } from 'react-router-dom';
 import Axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
@@ -17,6 +17,7 @@ import Signin from './components/user/Signin';
 import TaskCreate from './components/task/TaskCreate';
 import TaskIndex from './components/task/TaskIndex'
 import TeamCreate from './components/team/TeamCreate';
+import Profile from './components/user/Profile';
 
 // Interfaces
 import { IUserToken } from './interfaces/IUser';
@@ -26,12 +27,16 @@ import UserIDContext from './contexts/UserIDContext';
 
 // CSS
 import '../src/App.css';
+// import '../src/styles/custom-bootstrap';
 
 const App: React.FC = () => {
 
+  // Navigate
+  const navigate: NavigateFunction = useNavigate();
+
   // States
   const [userID, setUserID] = useState<IUserToken | undefined>();
-  const [isAuth, setIsAuth] = useState<Boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   
   //  Decode 'token' and set states
   useEffect(() => {
@@ -84,31 +89,57 @@ const App: React.FC = () => {
     })
   };
 
+  // Logout Handler
+  const logoutHandler = (e: any) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    setIsAuth(false);
+    setUserID(undefined);
+    navigate('/');
+  }
+
   return (
     <UserIDContext.Provider value={{userID, setUserID}}>
       <div>
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary bg-gray">
           <Container>
             <Navbar.Brand as={Link} to='/'>Task Manager</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link as={Link} to='/signup'>Sign Up</Nav.Link>
-                <NavDropdown title="Menu" id="basic-nav-dropdown">
-                  <NavDropdown.Item as={Link} to='/task/index'>
-                    Tasks
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/task/add'>
-                    Add Task
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/team/add'>
-                    Add Team
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to='/account'>
-                    Account
-                  </NavDropdown.Item>
-                </NavDropdown>
+                {!isAuth ? (
+                  <>
+                  <Nav.Link as={Link} to='/signup'>Register</Nav.Link>
+                  <Nav.Link as={Link} to='/signin'>Log In</Nav.Link>
+                  </>
+                ) : (
+                  <>
+                    <NavDropdown
+                    title="Menu"
+                    id="basic-nav-dropdown"
+                    >
+                      <NavDropdown.Item as={Link} to='/task/index'>
+                        Tasks
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to='/team/index'>
+                        Teams
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to='/task/add'>
+                        Add Task
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to='/team/add'>
+                        Add Team
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to='/profile'>
+                        {userID?.user.name}'s Account
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={logoutHandler}>
+                        Log Out
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -137,6 +168,10 @@ const App: React.FC = () => {
           <Route
             path='/team/add'
             element={<TeamCreate/>}
+          />
+          <Route
+          path='/profile'
+          element={<Profile/>}
           />
         </Routes>
       </div>

@@ -98,7 +98,7 @@ const TeamCreate: React.FC = () => {
                       <div className="d-flex justify-content-center">
                         <button
                           type="submit"
-                          className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                          className="btn btn-warning btn-block btn-lg gradient-custom-4 text-body"
                         >
                           Submit
                         </button>

@@ -19,6 +19,7 @@ const TaskIndex: React.FC = () => {
    // Context
    const { userID } = useContext(UserIDContext);
 
+  //  Custom Hook
    const tasks = useUserTasks(userID);
 
   // States
@@ -31,7 +32,7 @@ const TaskIndex: React.FC = () => {
 
   // Map Through and Display Each Task
   const showAllTasks = (): JSX.Element[] | undefined => {
-    if (typeof tasks !== 'undefined') {
+    if (typeof tasks !== 'undefined' && tasks.length > 0) {
       return tasks.map((taskEl, index) => {
         return (
           <Fragment key={index}>
@@ -44,7 +45,7 @@ const TaskIndex: React.FC = () => {
 
   return (
     <div>
-      <select
+      {/* <select
         value={limit}
         onChange={handleLimitChange}
         >
@@ -60,16 +61,88 @@ const TaskIndex: React.FC = () => {
             <option value="20">
                 20
             </option>
-        </select>
-      <MDBTable align='middle' hover>
+        </select> */}
+      <MDBTable align='middle' className='' hover>
         <MDBTableHead>
           <tr>
-            <th scope='col'>Title</th>
-            <th scope='col'>Description</th>
-            <th scope='col'>Status</th>
-            <th scope='col'>Team</th>
-            <th scope='col'>Edit</th>
-            <th scope='col'>Delete</th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            >
+              Title
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            >
+              Description
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            >
+              Status
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            >
+              Team
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            >
+              Edit
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #c9c9c9',
+              borderBottom: 'solid 4px #c9c9c9',
+              background: '#f7f7f7',
+              color: 'black',
+              fontWeight: 'bold',
+            }}
+            className='align-middle'
+            >
+              Delete
+            </th>
+            {/* <th scope='col'>Description</th>
+            <th scope='col'>Status</th> */}
+            {/* <th scope='col'>Team</th> */}
+            {/* <th scope='col'>Edit</th> */}
+            {/* <th scope='col'>Delete</th> */}
           </tr>
         </MDBTableHead>
         <MDBTableBody>

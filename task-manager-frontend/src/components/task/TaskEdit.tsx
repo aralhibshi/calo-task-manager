@@ -107,7 +107,7 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
         Edit
       </Button> */}
 
-      <i className="fa fa-pencil" aria-hidden="true" onClick={handleShow}></i>
+      <i className="fa fa-pencil" aria-hidden="true" style={{fontSize: '25px', cursor: 'pointer'}} onClick={handleShow}></i>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -175,7 +175,7 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
               <div className="d-flex justify-content-center">
                 <button
                   type="submit"
-                  className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                  className="btn btn-warning btn-block btn-lg gradient-custom-4 text-body"
                 >
                   Submit
                 </button>

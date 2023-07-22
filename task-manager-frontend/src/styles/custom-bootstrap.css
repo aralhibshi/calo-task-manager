@@ -1,0 +1,9 @@
+.custom-font {
+  font-family: 'Rubik', sans-serif;
+}
+
+.navbar,
+.navbar-default {
+    background-image: linear-gradient(to bottom,#2c4053 0,#2c4053 100%) !important;
+    color: aliceblue !important;
+}

@@ -54,13 +54,15 @@ export const auth_signin_post = async (req: Request, res: Response): Promise<voi
                 interface Payload {
                     user:  {
                         id: string;
+                        name: string;
                     }
                 };
 
                 // Payload
                 const payload: Payload = {
                     user: {
-                        id: user._id
+                        id: user._id,
+                        name: user.firstName
                     }
                 };
 
