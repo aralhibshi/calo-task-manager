@@ -4,6 +4,25 @@
 
 .navbar,
 .navbar-default {
-    background-image: linear-gradient(to bottom,#2c4053 0,#2c4053 100%) !important;
-    color: aliceblue !important;
+    /* background-image: linear-gradient(to bottom,#2c4053 0,#2c4053 100%); */
+    background-image: linear-gradient(to bottom,#180b37 0,#180b37 100%) !important;
+    /* border-bottom: 2px solid #ac17aa4a; */
+    box-shadow: 0px -5px 30px 20px #000000,inset 0px -15px 30px -22px #402679 !important;
+}
+
+.table > :not(caption) > * > * {
+  background-color: #1d1f20 !important;
+  color: white;
+}
+
+.dropdown-menu > a:hover {
+  background-color: #3f228f;
+}
+
+table {
+  font-family: 'Dosis', sans-serif;
+}
+
+.custom-div {
+  font-family: 'Dosis', sans-serif;
 }

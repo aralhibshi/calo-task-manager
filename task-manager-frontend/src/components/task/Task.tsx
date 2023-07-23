@@ -34,7 +34,7 @@ const Task: React.FC<ITaskProps> = (props) => {
 
   return (
     <>
-      <tr>
+      <tr style={{borderBottom: '#43494c'}}>
         <td>
           <div className='d-flex align-items-center'>
             <img
@@ -45,8 +45,8 @@ const Task: React.FC<ITaskProps> = (props) => {
             />
             <div className='ms-3'>
               <p className='fw-bold mb-1'>{props.task.title}</p>
-              <p className='text-muted mb-0'>
-                <i className="fa fa-user" aria-hidden="true"></i>
+              <p className='mb-0' style={{color: 'gray'}}>
+                <i className="fa fa-user" aria-hidden="true" style={{color: 'gray'}}></i>
                 &nbsp; {props.task.users.length}
               </p>
             </div>
@@ -72,7 +72,7 @@ const Task: React.FC<ITaskProps> = (props) => {
             {props.task.status}
           </MDBBadge>
         </td>
-        <td>{teamName}</td>
+        <td style={{color: 'white'}}>{teamName}</td>
         <td>
           <TaskEditModal task={props.task}/>
         </td>

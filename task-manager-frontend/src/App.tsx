@@ -102,40 +102,41 @@ const App: React.FC = () => {
   return (
     <UserIDContext.Provider value={{userID, setUserID}}>
       <div>
-        <Navbar expand="lg" className="bg-body-tertiary bg-gray">
+        <Navbar expand="lg" className="bg-body-tertiary bg-gray text-white">
           <Container>
-            <Navbar.Brand as={Link} to='/'>Task Manager</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Brand as={Link} to='/' className='text-white'>Task Manager</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" className='text-white'/>
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
+              <Nav className="me-auto text-white">
                 {!isAuth ? (
                   <>
-                  <Nav.Link as={Link} to='/signup'>Register</Nav.Link>
-                  <Nav.Link as={Link} to='/signin'>Log In</Nav.Link>
+                  <Nav.Link as={Link} to='/signup' className='text-white'>Register</Nav.Link>
+                  <Nav.Link as={Link} to='/signin' className='text-white'>Log In</Nav.Link>
                   </>
                 ) : (
                   <>
                     <NavDropdown
                     title="Menu"
                     id="basic-nav-dropdown"
+                    className='text-white nav-dropdown hover:text-black'
                     >
-                      <NavDropdown.Item as={Link} to='/task/index'>
+                      <NavDropdown.Item as={Link} to='/task/index' className='text-white hover:bg-gray-900'>
                         Tasks
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to='/team/index'>
+                      <NavDropdown.Item as={Link} to='/team/index' className='text-white'>
                         Teams
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to='/task/add'>
+                      <NavDropdown.Item as={Link} to='/task/add' className='text-white'>
                         Add Task
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to='/team/add'>
+                      <NavDropdown.Item as={Link} to='/team/add' className='text-white'>
                         Add Team
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item as={Link} to='/profile'>
+                      <NavDropdown.Item as={Link} to='/profile' className='text-white'>
                         {userID?.user.name}'s Account
                       </NavDropdown.Item>
-                      <NavDropdown.Item onClick={logoutHandler}>
+                      <NavDropdown.Item onClick={logoutHandler} className='text-white hover:text-black'>
                         Log Out
                       </NavDropdown.Item>
                     </NavDropdown>

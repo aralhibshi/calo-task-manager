@@ -8,7 +8,7 @@ import { ITeamProps } from '../../interfaces/ITeamProps';
 const Team:React.FC<ITeamProps> = (props) => {
   return (
     <>
-      <tr>
+      <tr style={{borderBottom: '#43494c'}}>
         <td>
           <div className='d-flex align-items-center'>
             <img
@@ -19,8 +19,8 @@ const Team:React.FC<ITeamProps> = (props) => {
             />
             <div className='ms-3'>
               <p className='fw-bold mb-1'>{props.team.name}</p>
-              <p className='text-muted mb-0'>
-                <i className="fa fa-user" aria-hidden="true"></i>
+              <p className='mb-0' style={{color: 'gray'}}>
+                <i className="fa fa-user" aria-hidden="true" style={{color: 'gray'}}></i>
                 &nbsp; {props.team.users.length}
               </p>
             </div>

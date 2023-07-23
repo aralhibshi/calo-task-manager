@@ -37,17 +37,17 @@ const TeamIndex: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="vh-100 gradient-custom-3">
       <MDBTable align='middle' className='' hover>
         <MDBTableHead>
           <tr>
             <th
             scope='col'
             style={{
-              borderTop: 'solid 4px #c9c9c9',
-              borderBottom: 'solid 4px #c9c9c9',
-              background: '#f7f7f7',
-              color: 'black',
+              borderTop: 'solid 4px #1c1e1f',
+              borderBottom: 'solid 4px #4a5153',
+              background: '#1c1e1f',
+              color: 'white',
               fontWeight: 'bold',
             }}
             >
@@ -56,10 +56,10 @@ const TeamIndex: React.FC = () => {
             <th
             scope='col'
             style={{
-              borderTop: 'solid 4px #c9c9c9',
-              borderBottom: 'solid 4px #c9c9c9',
-              background: '#f7f7f7',
-              color: 'black',
+              borderTop: 'solid 4px #1c1e1f',
+              borderBottom: 'solid 4px #4a5153',
+              background: '#1c1e1f',
+              color: 'white',
               fontWeight: 'bold',
             }}
             >
@@ -68,10 +68,10 @@ const TeamIndex: React.FC = () => {
             <th
             scope='col'
             style={{
-              borderTop: 'solid 4px #c9c9c9',
-              borderBottom: 'solid 4px #c9c9c9',
-              background: '#f7f7f7',
-              color: 'black',
+              borderTop: 'solid 4px #1c1e1f',
+              borderBottom: 'solid 4px #4a5153',
+              background: '#1c1e1f',
+              color: 'white',
               fontWeight: 'bold',
             }}
             >
@@ -80,10 +80,10 @@ const TeamIndex: React.FC = () => {
             <th
             scope='col'
             style={{
-              borderTop: 'solid 4px #c9c9c9',
-              borderBottom: 'solid 4px #c9c9c9',
-              background: '#f7f7f7',
-              color: 'black',
+              borderTop: 'solid 4px #1c1e1f',
+              borderBottom: 'solid 4px #4a5153',
+              background: '#1c1e1f',
+              color: 'white',
               fontWeight: 'bold',
             }}
             className='align-middle'

@@ -111,7 +111,7 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Document</Modal.Title>
+          <Modal.Title style={{color: 'black'}}>Edit Document</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="card-body p-5">
