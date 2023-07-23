@@ -42,7 +42,7 @@ const Signup: React.FC<ISignupProps> = (props) => {
   };
 
   return (
-    <section className="vh-100 bg-image custom-font" style={{ backgroundImage: `url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')` }}>
+    <section className="vh-100 bg-image custom-font">
       <div className="mask d-flex align-items-center h-100 gradient-custom-3">
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
@@ -110,7 +110,7 @@ const Signup: React.FC<ISignupProps> = (props) => {
                     </div>
 
                     <p className="text-center text-muted mt-5 mb-0">
-                      Have already an account? <a href="/signin" className="fw-bold text-body"><u>Login here</u></a>
+                      Have already an account? <a href="/signin" className="fw-bold text-body"><u className='text-black'>Login here</u></a>
                     </p>
                   </form>
                 </div>

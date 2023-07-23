@@ -42,9 +42,7 @@ const Signin: React.FC<ISigninProps> = (props) => {
   return (
     <div>
       <section
-        className="vh-100 bg-image custom-font"
-        style={{ backgroundImage: `url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')` }}
-      >
+        className="vh-100 bg-image custom-font">
         <div className="mask d-flex align-items-center h-100 gradient-custom-3">
           <div className="container h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
@@ -90,7 +88,7 @@ const Signin: React.FC<ISigninProps> = (props) => {
                       <p className="text-center text-muted mt-5 mb-0">
                         Forgot Password? &nbsp; 
                         <a href="#!" className="fw-bold text-body">
-                          <u>Click Here</u>
+                          <u className='text-black'>Click Here</u>
                         </a>
                       </p>
                     </form>

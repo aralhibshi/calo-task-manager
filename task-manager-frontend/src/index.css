@@ -80,3 +80,18 @@ background: -webkit-linear-gradient(to right, rgb(250, 228, 132), rgb(254, 204, 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 background: linear-gradient(to right, rgba(250, 228, 132, 1), rgba(254, 204, 154, 1))
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .task-manager {
+    animation: task-manager-translate infinite 2.7s alternate-reverse;
+  }
+}
+
+@keyframes task-manager-translate {
+  from {
+    transform: translateY(0px)
+  }
+  to {
+    transform: translateY(10px)
+  }
+}
