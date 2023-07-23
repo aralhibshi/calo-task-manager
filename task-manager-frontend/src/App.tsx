@@ -17,6 +17,7 @@ import Signin from './components/user/Signin';
 import TaskCreate from './components/task/TaskCreate';
 import TaskIndex from './components/task/TaskIndex'
 import TeamCreate from './components/team/TeamCreate';
+import TeamIndex from './components/team/TeamIndex';
 import Profile from './components/user/Profile';
 
 // Interfaces
@@ -170,8 +171,12 @@ const App: React.FC = () => {
             element={<TeamCreate/>}
           />
           <Route
-          path='/profile'
-          element={<Profile/>}
+            path='/team/index'
+            element={<TeamIndex/>}
+          />
+          <Route
+            path='/profile'
+            element={<Profile/>}
           />
         </Routes>
       </div>
