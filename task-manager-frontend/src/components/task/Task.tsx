@@ -6,9 +6,6 @@ import Axios from 'axios';
 // Components
 import TaskEditModal from './TaskEdit';
 
-// Boostrap and CSS
-import Button from 'react-bootstrap/Button';
-
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
 
