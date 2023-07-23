@@ -4,7 +4,7 @@ import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
 
 // Components
-import TaskEditModal from './TaskEdit';
+import TaskEdit from './TaskEdit';
 
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
@@ -74,7 +74,7 @@ const Task: React.FC<ITaskProps> = (props) => {
         </td>
         <td style={{color: 'white'}}>{teamName}</td>
         <td>
-          <TaskEditModal task={props.task}/>
+          <TaskEdit task={props.task}/>
         </td>
         <td className='align-middle'>
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>

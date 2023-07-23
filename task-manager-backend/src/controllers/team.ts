@@ -88,11 +88,14 @@ export const team_user_index_get = async (req: Request, res: Response): Promise<
 // Update - Team (If User is Owner)
 export const team_edit_post = async (req: Request, res: Response): Promise<void> => {
     try {
-        const team: ITeam | null = await Team.findById(req.body.id)
-        
+        const team = await Team.findByIdAndUpdate(
+            req.query.id,
+            req.body.team
+        );
+        res.json({'message': 'Team Updated!', team}).status(200);
     }
     catch (err) {
-        console.log('Error Updating Team')
-        res.json({'message': err}).status(400)
+        console.log('Error Updating Team');
+        res.json({'message': err}).status(400);
     }
 }

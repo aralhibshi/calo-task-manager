@@ -2,6 +2,9 @@
 import React from 'react';
 import { MDBBadge } from 'mdb-react-ui-kit';
 
+// Component
+import TeamEdit from './TeamEdit';
+
 // Interfaces
 import { ITeamProps } from '../../interfaces/ITeamProps';
 
@@ -30,9 +33,9 @@ const Team:React.FC<ITeamProps> = (props) => {
           <p className='fw-normal mb-1'>{props.team.description}</p>
           <p className='text-muted mb-0'><em>tags go here</em></p>
         </td>
-        {/* <td>
-          <TaskEditModal task={props.task}/>  
-        </td> */}
+        <td>
+          <TeamEdit team={props.team}/>
+        </td>
         {/* <td className='align-middle'>
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
         </td> */}

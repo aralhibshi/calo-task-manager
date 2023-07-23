@@ -103,10 +103,6 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
 
   return (
     <>
-      {/* <Button variant="dark" onClick={handleShow}>
-        Edit
-      </Button> */}
-
       <i className="fa fa-pencil" aria-hidden="true" style={{fontSize: '25px', cursor: 'pointer'}} onClick={handleShow}></i>
 
       <Modal show={show} onHide={handleClose}>
