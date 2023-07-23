@@ -1,14 +1,52 @@
-/* body {
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: gray;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} */
+} 
 
-body {
-  
+div, h1, h2, input, p, u, a, td, th, label, select, button, i {
+  font-family: 'Dosis', sans-serif;
+  color: white; 
+}
+
+em {
+  color: gray;
+}
+
+a#basic-nav-dropdown {
+  color: white;
+}
+
+tr, th {
+  background-image: linear-gradient(to bottom,#180b37 0,#180b37 100%);
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+  background-color: #180a36;
+  top: 6.5vh;
+}
+
+.dropdown-item {
+  color: white;
+}
+
+.btn {
+  font-family: 'Dosis', sans-serif;
+}
+
+.card-body {
+  /* background-color: #180a36;
+  color: white; */
 }
 
 code {
@@ -16,15 +54,21 @@ code {
     monospace;
 }
 
+.home-bg {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+}
+
 .gradient-custom-3 {
 /* fallback for old browsers */
 background: #84fab0;
 
 /* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+background: -webkit-linear-gradient(to right, rgba(49, 14, 90, 0.5), rgba(121, 20, 146, 0.5));
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+background: linear-gradient(to right, rgba(59, 13, 110, 0.5), rgba(112, 17, 121, 0.5))
 }
 .gradient-custom-4 {
 /* fallback for old browsers */
