@@ -56,7 +56,7 @@ const TeamCreate: React.FC = () => {
     e.preventDefault();
     if (typeof userID !== 'undefined') {
       createTeam(userID, newTeam);
-      navigate('/task/index');
+      navigate('/team/index');
     }
   };
 

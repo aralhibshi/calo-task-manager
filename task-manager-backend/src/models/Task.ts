@@ -20,6 +20,7 @@ const taskSchema: Schema<ITask> = new Schema({
     description: {
         type: String,
         minlength: [5, '"Description", must be 5 or more characters'],
+        maxlength: [120, '"Description", cannot be more than 30 characters'],
         required: true
     },
     status: {

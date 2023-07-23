@@ -12,14 +12,13 @@ const teamSchema: Schema<ITeam> = new Schema({
     name: {
         type: String,
         minlength: [2, '"Name" must be 2 or more characters'],
-        maxlength: [20, '"Name cannot be more than 50 characters'],
-        unique: true,
+        maxlength: [50, '"Name cannot be more than 50 characters'],
         required: true
     },
     description: {
         type: String,
         minlength: [2, '"Description" must be 2 or more characters'],
-        maxlength: [20, '"Description", cannot be more than 20 characters'],
+        maxlength: [120, '"Description", cannot be more than 50 characters'],
         required: true
     },
     users: [
