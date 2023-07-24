@@ -24,7 +24,7 @@ const TaskIndex: React.FC<ITaskIndexProps> = (props) => {
   // const [limit, setLimit] = useState<number>(10);
   const [refetch, setRefetch]= useState<boolean>(false);
 
-  // Set Refetch False
+  // Set Refetch to True or False (Depending on Props)
   useEffect(() => {
     if (props.refetch) {
       setRefetch(true)

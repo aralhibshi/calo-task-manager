@@ -6,11 +6,12 @@ import Axios from 'axios';
 // Interfaces
 import { INewTeam } from '../../interfaces/ITeam';
 import { IUserToken } from '../../interfaces/IUser';
+import { ITeamCreateProps } from '../../interfaces/ITeamCreateProps';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
 
-const TeamCreate: React.FC = () => {
+const TeamCreate: React.FC<ITeamCreateProps> = (props) => {
 
   // Navigate
   const navigate: NavigateFunction = useNavigate();
@@ -51,6 +52,7 @@ const TeamCreate: React.FC = () => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
+    props.setRefetch(true);
     e.preventDefault();
     if (typeof userID !== 'undefined') {
       createTeam(userID, newTeam);

@@ -174,11 +174,11 @@ const App: React.FC = () => {
           />
           <Route
             path='/team/add'
-            element={isAuth ? (<TeamCreate/>) : (<Signup register={registerHandler}/>)}
+            element={isAuth ? (<TeamCreate setRefetch={setRefetch}/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/team/index'
-            element={isAuth ? (<TeamIndex/>) : (<Signup register={registerHandler}/>)}
+            element={isAuth ? (<TeamIndex refetch={refetch}/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/profile'

@@ -10,6 +10,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
 // Interafaces
 import { ITeam } from '../../interfaces/ITeam';
+import { ITeamIndexProps } from '../../interfaces/ITeamIndexProps';
 
 // Contexts
 import UserIDContext from '../../contexts/UserIDContext';
@@ -17,15 +18,19 @@ import UserIDContext from '../../contexts/UserIDContext';
 // Custom Hooks
 import useUserTeams from '../../customHooks/useUserTeams';
 
-const TeamIndex: React.FC = () => {
+const TeamIndex: React.FC<ITeamIndexProps> = (props) => {
 
   // States
   const [refetch, setRefetch] = useState<boolean>(false);
 
-  // Set Refetch to False
+  // Set Refetch to True or False (Depending on Props)
   useEffect(() => {
-    setRefetch(false);  
-  });
+    if (props.refetch) {
+      setRefetch(true)
+    } else {
+    setRefetch(false);
+    }
+  }, [props.refetch])
 
   // Context
   const { userID } = useContext(UserIDContext);
