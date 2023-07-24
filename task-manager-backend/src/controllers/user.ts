@@ -26,3 +26,23 @@ export const user_detail_get = async (req: Request | any, res: Response): Promis
     res.json({'message': err}).status(400);
   }
 }
+
+// Read - All Users
+export const user_index_get = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users = await User.find()
+    let allUsers = []
+
+    // Add all except for current User to Array
+    for (let i = 0; i < users.length; i++) {
+      if (req.query.id !== users[i]._id.toString()) {
+        allUsers.push({id: users[i]._id, name: users[i].firstName + ' ' + users[i].lastName})
+      }
+    }
+    res.json(allUsers);
+  }
+  catch (err) {
+    console.log('Error Getting All Users')
+    res.json({'message': err})
+  }
+}

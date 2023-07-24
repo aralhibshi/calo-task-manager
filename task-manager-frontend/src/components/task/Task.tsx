@@ -31,7 +31,7 @@ const Task: React.FC<ITaskProps> = (props) => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
-    // toast('Task Deleted!')
+    toast('Task Deleted!')
     if (props.setRefetch) {
       props.setRefetch(true);
     }
