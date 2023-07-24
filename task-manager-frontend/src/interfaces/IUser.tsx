@@ -35,3 +35,10 @@ export interface IUserToken {
         name: string;
     }
 }
+
+// User All Interface
+export interface IUserAll {
+    _id?: string;
+    id: string;
+    name: string;
+}

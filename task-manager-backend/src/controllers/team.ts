@@ -146,3 +146,19 @@ export const team_delete_post = async (req: Request, res: Response): Promise<voi
         res.json({'message': err}).status(400);
     }
 }
+
+// Update - Add Selected User to Team
+export const team_user_add_post = async (req: Request, res: Response): Promise<void> => {
+    try {
+        await Team.findById(
+            req.query.id,
+            {
+                $push: { users: req.body.user._id }
+            }
+        )
+    }
+    catch (err) {
+        console.log('Error Adding User to Team');
+        res.json({'message': err}).status(400);
+    }
+}

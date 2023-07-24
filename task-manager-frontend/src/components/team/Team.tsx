@@ -11,6 +11,7 @@ import { ITeamProps } from '../../interfaces/ITeamProps';
 
 // Contexts
 import UserIDContext from '../../contexts/UserIDContext';
+import TeamAddUser from './TeamAddUser';
 
 const Team:React.FC<ITeamProps> = (props) => {
 
@@ -61,6 +62,10 @@ const Team:React.FC<ITeamProps> = (props) => {
         <td>
           <p className='fw-normal mb-1'>{props.team.description}</p>
           <p className='text-muted mb-0'><em>tags go here</em></p>
+        </td>
+        <td>
+          {props.setRefetch ? (<TeamAddUser setRefetch={props.setRefetch}/>) : (<></>)}
+          {/* <TeamAddUser setRefetch={props.setRefetch}/> */}
         </td>
         <td>
           <TeamEdit team={props.team} setRefetch={props.setRefetch}/>

@@ -90,6 +90,18 @@ const TeamIndex: React.FC<ITeamIndexProps> = (props) => {
               fontWeight: 'bold',
             }}
             >
+              Add Users
+            </th>
+            <th
+            scope='col'
+            style={{
+              borderTop: 'solid 4px #1c1e1f',
+              borderBottom: 'solid 4px #4a5153',
+              background: '#1c1e1f',
+              color: 'white',
+              fontWeight: 'bold',
+            }}
+            >
               Edit
             </th>
             <th
