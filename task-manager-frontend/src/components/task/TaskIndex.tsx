@@ -10,6 +10,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
 // Interfaces
 import { ITask } from '../../interfaces/ITask';
+import { ITaskIndexProps } from '../../interfaces/ITaskIndexProps';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
@@ -17,16 +18,20 @@ import UserIDContext from '../../contexts/UserIDContext';
 // Custom Hooks
 import useUserTasks from '../../customHooks/useUserTasks';
 
-const TaskIndex: React.FC = () => {
+const TaskIndex: React.FC<ITaskIndexProps> = (props) => {
 
   // States
   // const [limit, setLimit] = useState<number>(10);
-  const [refetch, setRefetch]: any = useState(false);
+  const [refetch, setRefetch]= useState<boolean>(false);
 
   // Set Refetch False
   useEffect(() => {
+    if (props.refetch) {
+      setRefetch(true)
+    } else {
     setRefetch(false);
-  })
+    }
+  }, [props.refetch])
 
   // Context
   const { userID } = useContext(UserIDContext);

@@ -56,7 +56,7 @@ app.listen(port, () => {
 });
 
 // MongoDB URL
-const mongoURL: string = process.env.MONGOREMOTE!;
+const mongoURL: string = process.env.MONGOLOCAL!;
 
 // DB Connection
 mongoose.connect(mongoURL)

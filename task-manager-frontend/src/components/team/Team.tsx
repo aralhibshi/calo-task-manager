@@ -19,7 +19,6 @@ const Team:React.FC<ITeamProps> = (props) => {
 
   // Axios Post - Delete Team
   const deleteTeam = (): void => {
-    toast('Team Deleted!');
     Axios.post(`/team/delete?teamId=${props.team._id}&userId=${userID.user.id}`)
     .then(res => {
       console.log(res);
@@ -27,8 +26,17 @@ const Team:React.FC<ITeamProps> = (props) => {
     .catch(err => {
       console.log(err);
     })
-    // window.location.reload();
   };
+
+  // Submit
+  const handleSubmit = (e: React.FormEvent): void => {
+    // toast('Team Deleted!');
+    if (props.setRefetch) {
+      props.setRefetch(true);
+    }
+    e.preventDefault();
+    deleteTeam();
+  }
 
   return (
     <>
@@ -58,7 +66,7 @@ const Team:React.FC<ITeamProps> = (props) => {
           <TeamEdit team={props.team} setRefetch={props.setRefetch}/>
         </td>
         <td className='align-middle'>
-          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTeam}></i>
+          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={handleSubmit}></i>
         </td>
       </tr>
       {/* <ToastContainer /> */}

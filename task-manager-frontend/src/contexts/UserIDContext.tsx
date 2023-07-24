@@ -5,12 +5,12 @@ import React, { createContext } from 'react';
 import { IUserToken } from '../interfaces/IUser';
 
 // UserIDContext Interface
-interface UserIDContextType {
+interface IUserIDContextType {
   userID: IUserToken | undefined | any;
   setUserID: React.Dispatch<React.SetStateAction<IUserToken | undefined>>;
 };
 
-export const UserIDContext = createContext<UserIDContextType>({
+export const UserIDContext = createContext<IUserIDContextType>({
   userID: undefined,
   setUserID: () => {}
 });

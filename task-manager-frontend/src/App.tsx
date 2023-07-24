@@ -38,6 +38,7 @@ const App: React.FC = () => {
   // States
   const [userID, setUserID] = useState<IUserToken | undefined>();
   const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [refetch, setRefetch] = useState<boolean>(false);
   
   //  Decode 'token' and set states
   useEffect(() => {
@@ -56,6 +57,11 @@ const App: React.FC = () => {
       }
     }
   }, [])
+
+  useEffect(() => {
+    setRefetch(false);
+    console.log(refetch);
+  }, [refetch])
 
   // Axios Post - Create User
   const registerHandler = (user: object): void => {
@@ -160,11 +166,11 @@ const App: React.FC = () => {
           />
           <Route
             path='/task/add'
-            element={isAuth ? (<TaskCreate/>) : (<Signup register={registerHandler}/>)}
+            element={isAuth ? (<TaskCreate setRefetch={setRefetch}/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/task/index'
-            element={isAuth ? (<TaskIndex/>) : (<Signup register={registerHandler}/>)}
+            element={isAuth ? (<TaskIndex refetch={refetch}/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/team/add'

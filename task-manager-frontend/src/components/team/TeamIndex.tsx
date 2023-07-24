@@ -20,7 +20,7 @@ import useUserTeams from '../../customHooks/useUserTeams';
 const TeamIndex: React.FC = () => {
 
   // States
-  const [refetch, setRefetch]: any = useState(false);
+  const [refetch, setRefetch] = useState<boolean>(false);
 
   // Set Refetch to False
   useEffect(() => {

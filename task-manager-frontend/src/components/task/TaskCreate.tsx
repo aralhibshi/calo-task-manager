@@ -6,6 +6,7 @@ import Axios from 'axios';
 // Interfaces
 import { INewTask } from '../../interfaces/ITask'
 import { IUserToken } from '../../interfaces/IUser';
+import { ITaskCreateProps } from '../../interfaces/ITaskCreateProps';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
@@ -14,7 +15,7 @@ import UserIDContext from '../../contexts/UserIDContext';
 import useUserTeams from '../../customHooks/useUserTeams';
 import { ITeam } from '../../interfaces/ITeam';
 
-const TaskCreate: React.FC = () => {
+const TaskCreate: React.FC<ITaskCreateProps> = (props) => {
 
   // Navigate
   const navigate: NavigateFunction = useNavigate();
@@ -76,6 +77,7 @@ const TaskCreate: React.FC = () => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
+    props.setRefetch(true);
     e.preventDefault();
     if (typeof userID !== 'undefined') {
       createTask(userID, newTask);

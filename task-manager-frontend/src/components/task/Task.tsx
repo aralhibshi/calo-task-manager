@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Components
 import TaskEdit from './TaskEdit';
@@ -20,7 +20,6 @@ const Task: React.FC<ITaskProps> = (props) => {
 
   // Axios Post - Delete Task
   const deleteTask = (): void => {
-    toast('Task Deleted!')
     Axios.post(`/task/delete?id=${userID.user.id}`, {id: props.task._id})
     .then(res => {
       console.log(res);
@@ -28,8 +27,17 @@ const Task: React.FC<ITaskProps> = (props) => {
     .catch(err => {
       console.log(err);
     })
-    window.location.reload()
   };
+
+  // Submit
+  const handleSubmit = (e: React.FormEvent): void => {
+    // toast('Task Deleted!')
+    if (props.setRefetch) {
+      props.setRefetch(true);
+    }
+    e.preventDefault();
+    deleteTask();
+  }
 
   // Display Team Name
   const teamName = props.task.team.name;
@@ -79,9 +87,10 @@ const Task: React.FC<ITaskProps> = (props) => {
           <TaskEdit task={props.task} setRefetch={props.setRefetch}/>
         </td>
         <td className='align-middle'>
-          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
+          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={handleSubmit}></i>
         </td>
       </tr>
+      {/* <ToastContainer/> */}
     </>
   )
 }
