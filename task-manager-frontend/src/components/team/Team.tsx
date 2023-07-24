@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useContext } from 'react';
 import Axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
 
 // Component
 import TeamEdit from './TeamEdit';
@@ -18,6 +19,7 @@ const Team:React.FC<ITeamProps> = (props) => {
 
   // Axios Post - Delete Team
   const deleteTeam = (): void => {
+    toast('Team Deleted!');
     Axios.post(`/team/delete?teamId=${props.team._id}&userId=${userID.user.id}`)
     .then(res => {
       console.log(res);
@@ -25,7 +27,7 @@ const Team:React.FC<ITeamProps> = (props) => {
     .catch(err => {
       console.log(err);
     })
-    window.location.reload()
+    // window.location.reload();
   };
 
   return (
@@ -59,6 +61,7 @@ const Team:React.FC<ITeamProps> = (props) => {
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTeam}></i>
         </td>
       </tr>
+      <ToastContainer />
     </>
   )
 };

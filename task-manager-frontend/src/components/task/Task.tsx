@@ -2,6 +2,7 @@
 import React, { useContext } from 'react'
 import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Components
 import TaskEdit from './TaskEdit';
@@ -19,6 +20,7 @@ const Task: React.FC<ITaskProps> = (props) => {
 
   // Axios Post - Delete Task
   const deleteTask = (): void => {
+    toast('Task Deleted!')
     Axios.post(`/task/delete?id=${userID.user.id}`, {id: props.task._id})
     .then(res => {
       console.log(res);
@@ -80,6 +82,7 @@ const Task: React.FC<ITaskProps> = (props) => {
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
         </td>
       </tr>
+      <ToastContainer/>
     </>
   )
 }

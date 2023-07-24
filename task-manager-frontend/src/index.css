@@ -73,6 +73,10 @@ background: linear-gradient(to right, rgba(59, 13, 110, 0.5), rgba(112, 17, 121,
   height: 93vh;
 }
 
+.Toastify__toast-body div {
+  color: black;
+}
+
 .gradient-custom-4 {
 /* fallback for old browsers */
 background: #84fab0;

@@ -2,13 +2,11 @@
 import React, {useState, useContext, ChangeEvent} from 'react';
 import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Interfaces
 import { ITeamProps } from '../../interfaces/ITeamProps';
 import { INewTeam } from '../../interfaces/ITeam';
-
-// Context
-import UserIDContext from '../../contexts/UserIDContext';
 
 const TeamEdit: React.FC<ITeamProps> = (props) => {
 
@@ -18,9 +16,6 @@ const TeamEdit: React.FC<ITeamProps> = (props) => {
     name: props.team.name,
     description: props.team.description
   });
-
-  // Context
-  const { userID } = useContext(UserIDContext);
 
    // Handle Show Modal
    const handleShow = (): void => {
@@ -45,6 +40,7 @@ const TeamEdit: React.FC<ITeamProps> = (props) => {
 
    // Axios Post - Task Edit
    const updateTeam = (team: INewTeam) => {
+    toast('Team Edited!');
     console.log(props.team._id, team)
     Axios.post(`/team/edit?id=${props.team._id}`, {team})
     .then(res => {
@@ -112,6 +108,7 @@ const TeamEdit: React.FC<ITeamProps> = (props) => {
           </div>
         </Modal.Body>
       </Modal>
+      <ToastContainer/>
     </>
   )
 };

@@ -5,6 +5,7 @@ import './styles/custom-bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(

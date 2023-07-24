@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState, useContext, Fragment, ChangeEvent } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 // Components
@@ -16,14 +16,15 @@ import useUserTasks from '../../customHooks/useUserTasks';
 
 const TaskIndex: React.FC = () => {
 
-   // Context
-   const { userID } = useContext(UserIDContext);
+  // States
+  // const [limit, setLimit] = useState<number>(10);
+
+  // Context
+  const { userID } = useContext(UserIDContext);
 
   //  Custom Hook
-   const tasks = useUserTasks(userID);
+  const tasks = useUserTasks(userID);
 
-  // // States
-  // const [limit, setLimit] = useState<number>(10);
 
   // // Limit Change
   // const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>): void => {

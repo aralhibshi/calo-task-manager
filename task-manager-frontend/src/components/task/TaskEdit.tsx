@@ -2,6 +2,7 @@
 import React, { useState, useContext, ChangeEvent, Fragment }  from 'react';
 import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
@@ -85,13 +86,14 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
 
   // Axios Post - Task Edit
   const updateTask = (task: INewTask) => {
-      Axios.post(`/task/edit?id=${props.task._id}`, {task})
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    toast('Task Edited!');
+    Axios.post(`/task/edit?id=${props.task._id}`, {task})
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   // Submit
@@ -180,6 +182,7 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
           </div>
         </Modal.Body>
       </Modal>
+      <ToastContainer/>
     </>
   )
 };

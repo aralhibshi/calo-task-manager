@@ -6,7 +6,6 @@ import Axios from 'axios';
 // Interfaces
 import { INewTeam } from '../../interfaces/ITeam';
 import { IUserToken } from '../../interfaces/IUser';
-import { ITeam } from '../../interfaces/ITeam';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
