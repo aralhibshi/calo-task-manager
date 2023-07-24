@@ -161,23 +161,23 @@ const App: React.FC = () => {
           />
           <Route
             path='/task/add'
-            element={<TaskCreate/>}
+            element={isAuth ? (<TaskCreate/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/task/index'
-            element={<TaskIndex/>}
+            element={isAuth ? (<TaskIndex/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/team/add'
-            element={<TeamCreate/>}
+            element={isAuth ? (<TeamCreate/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/team/index'
-            element={<TeamIndex/>}
+            element={isAuth ? (<TeamIndex/>) : (<Signup register={registerHandler}/>)}
           />
           <Route
             path='/profile'
-            element={<Profile/>}
+            element={isAuth ? (<Profile/>) : (<Signup register={registerHandler}/>)}
           />
         </Routes>
       </div>

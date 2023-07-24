@@ -2,6 +2,9 @@
 import express, { Router } from 'express';
 const router: Router = express.Router();
 
+// Authorization
+import { isLoggedIn } from '../lib/isLoggedIn';
+
 // Controller
 import * as taskCtrl from '../controllers/task';
 
