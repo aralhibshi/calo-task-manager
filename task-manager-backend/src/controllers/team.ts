@@ -111,29 +111,38 @@ export const team_delete_post = async (req: Request, res: Response): Promise<voi
         const teamId = req.query.teamId;
         const userId = req.query.userId;
 
-        // Delete Team
-        await Team.findByIdAndDelete(teamId);
+        // Find Tasks
+        const tasks = await Task.find({team: teamId})
 
-        // Delete All Tasks with Team
-        const deletedTasks: any = await Task.deleteMany({team: teamId});
+        // Create Array of Task IDs
+        let taskIds: Array<string> = []
 
-        // Array of Deleted Tasks
-        const allTaskIds: Array<ITask> = deletedTasks.map((task: ITask) => task._id)
+        for (let i = 0; i < tasks.length; i++) {
+            taskIds.push(tasks[i]._id)
+        }
 
-        // Remove Team from User
+        // Remove Team and Tasks from User
         await User.findByIdAndUpdate(
             userId,
             {
                 $pull: {
                     teams: teamId,
-                    tasks: { $in: allTaskIds }
+                    tasks: { $in: taskIds }
                 }
             }
         )
+
+        // Delete All Tasks with Team
+        await Task.deleteMany({team: teamId});
+
+        // Delete Team
+        await Team.findByIdAndDelete(teamId);
+
         res.json({'message': 'Team Deleted!'});
     }
     catch (err) {
         console.log('Error Deleting Team');
+        console.log(err);
         res.json({'message': err}).status(400);
     }
 }

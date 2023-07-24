@@ -1,6 +1,6 @@
 // Dependencies
-import React from 'react';
-import { MDBBadge } from 'mdb-react-ui-kit';
+import React, { useContext } from 'react';
+import Axios from 'axios'
 
 // Component
 import TeamEdit from './TeamEdit';
@@ -8,7 +8,26 @@ import TeamEdit from './TeamEdit';
 // Interfaces
 import { ITeamProps } from '../../interfaces/ITeamProps';
 
+// Contexts
+import UserIDContext from '../../contexts/UserIDContext';
+
 const Team:React.FC<ITeamProps> = (props) => {
+
+  // Context
+  const { userID } = useContext(UserIDContext);
+
+  // Axios Post - Delete Team
+  const deleteTeam = (): void => {
+    Axios.post(`/team/delete?teamId=${props.team._id}&userId=${userID.user.id}`)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    window.location.reload()
+  };
+
   return (
     <>
       <tr style={{borderBottom: '#43494c'}}>
@@ -37,7 +56,7 @@ const Team:React.FC<ITeamProps> = (props) => {
           <TeamEdit team={props.team}/>
         </td>
         <td className='align-middle'>
-          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true"></i>
+          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTeam}></i>
         </td>
       </tr>
     </>
