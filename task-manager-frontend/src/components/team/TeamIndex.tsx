@@ -30,7 +30,7 @@ const TeamIndex: React.FC<ITeamIndexProps> = (props) => {
     } else {
     setRefetch(false);
     }
-  }, [props.refetch])
+  })
 
   // Context
   const { userID } = useContext(UserIDContext);

@@ -30,7 +30,7 @@ const Team:React.FC<ITeamProps> = (props) => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
-    // toast('Team Deleted!');
+    toast('Team Deleted!');
     if (props.setRefetch) {
       props.setRefetch(true);
     }

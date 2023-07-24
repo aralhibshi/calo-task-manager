@@ -31,7 +31,7 @@ const TaskIndex: React.FC<ITaskIndexProps> = (props) => {
     } else {
     setRefetch(false);
     }
-  }, [props.refetch])
+  })
 
   // Context
   const { userID } = useContext(UserIDContext);
