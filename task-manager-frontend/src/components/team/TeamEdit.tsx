@@ -35,7 +35,6 @@ const TeamEdit: React.FC<ITeamProps> = (props) => {
       [name]: value,
     };
     setUpdatedTeam(team);
-    console.log(team);
   };
 
    // Axios Post - Task Edit
@@ -53,6 +52,9 @@ const TeamEdit: React.FC<ITeamProps> = (props) => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
+    if (props.setRefetch) {
+      props.setRefetch(true);
+    }
     e.preventDefault();
     updateTeam(updatedTeam);
     handleClose();

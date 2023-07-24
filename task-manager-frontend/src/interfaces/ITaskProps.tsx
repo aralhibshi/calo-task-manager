@@ -3,5 +3,6 @@ import { ITask } from '../interfaces/ITask'
 
 // Task Props Interface
 export interface ITaskProps {
-    task: ITask;
-  }
+  task: ITask | any;
+  setRefetch?: React.Dispatch<React.SetStateAction<boolean>>;
+}

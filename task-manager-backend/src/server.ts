@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Port
-const port: string | undefined = process.env.PORT;
+const port: string = process.env.PORT!;
 
 // Passport Configuration
 import passport from './lib/passportConfig';
@@ -25,7 +25,7 @@ app.use(express.json());
 
 // Session Configuration
 const sessionOptions: SessionOptions = {
-    secret: 'MyCoolSecret',
+    secret: process.env.SECRET!,
     saveUninitialized: true,
     resave: false,
     cookie: {maxAge: 365000000}

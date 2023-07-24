@@ -49,7 +49,6 @@ const App: React.FC = () => {
       if (user) {
         setIsAuth(true);
         setUserID(user);
-        console.log(user);
       }
       else if (!user) {
         localStorage.removeItem('token');

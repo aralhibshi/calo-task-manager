@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 // Interfaces
 import { ITaskProps } from '../../interfaces/ITaskProps';
-import { INewTask, ITask } from '../../interfaces/ITask'
+import { INewTask } from '../../interfaces/ITask'
 import { ITeam } from '../../interfaces/ITeam';
 
 // Context
@@ -30,7 +30,7 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
   const { userID } = useContext(UserIDContext);
 
    // Custom Hooks
-   const teams: any = useUserTeams(userID);
+   const teams: Array<ITeam> | undefined = useUserTeams(userID, false);
 
    // Handle Show Modal
    const handleShow = (): void => {
@@ -50,7 +50,6 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
       [name]: value,
     };
     setUpdatedTask(task);
-    console.log(task);
   };
 
   // Change Handler for Team Select Element
@@ -59,7 +58,6 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
     const task = { ...updatedTask };
     task.team = selectedValue;
     setUpdatedTask(task);
-    console.log(task)
   };
 
   // Change Handler for Team Select Element
@@ -68,7 +66,6 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
     const task = { ...updatedTask };
     task.status = selectedValue;
     setUpdatedTask(task);
-    console.log(task)
   };
 
   // Map Through and Display Each Task
@@ -98,6 +95,9 @@ const TaskEdit: React.FC<ITaskProps> = (props) => {
 
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
+    if (props.setRefetch) {
+      props.setRefetch(true);
+    }
     e.preventDefault();
     updateTask(updatedTask);
     handleClose();

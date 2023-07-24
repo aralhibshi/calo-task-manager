@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext, Fragment, useEffect } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 // Components
@@ -7,6 +7,9 @@ import Task from './Task';
 
 // Bootstrap and CSS
 import 'font-awesome/css/font-awesome.min.css';
+
+// Interfaces
+import { ITask } from '../../interfaces/ITask';
 
 // Context
 import UserIDContext from '../../contexts/UserIDContext';
@@ -18,12 +21,18 @@ const TaskIndex: React.FC = () => {
 
   // States
   // const [limit, setLimit] = useState<number>(10);
+  const [refetch, setRefetch]: any = useState(false);
+
+  // Set Refetch False
+  useEffect(() => {
+    setRefetch(false);
+  })
 
   // Context
   const { userID } = useContext(UserIDContext);
 
   //  Custom Hook
-  const tasks = useUserTasks(userID);
+  const tasks: Array<ITask> | undefined = useUserTasks(userID, refetch);
 
 
   // // Limit Change
@@ -38,7 +47,7 @@ const TaskIndex: React.FC = () => {
       return tasks.map((taskEl, index) => {
         return (
           <Fragment key={index}>
-            <Task task={taskEl}/>
+            <Task task={taskEl} setRefetch={setRefetch}/>
           </Fragment>
         )
       })

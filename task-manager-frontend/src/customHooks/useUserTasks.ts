@@ -1,12 +1,12 @@
 // Depdencies
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import Axios from 'axios';
 
 // Interfaces
 import { ITask } from '../interfaces/ITask';
 import { IUserToken } from '../interfaces/IUser';
 
-const useUserTasks = (userID: IUserToken | null) => {
+const useUserTasks = (userID: IUserToken | null, refetch: any) => {
   const [tasks, setTasks] = useState<Array<ITask> | undefined>();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const useUserTasks = (userID: IUserToken | null) => {
       }
     };
     fetchUserTasks();
-  }, [userID]);
+  }, [userID, refetch]);
 
   return tasks;
 };

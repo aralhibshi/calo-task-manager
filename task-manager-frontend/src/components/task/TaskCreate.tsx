@@ -23,7 +23,7 @@ const TaskCreate: React.FC = () => {
   const { userID } = useContext(UserIDContext);
 
   // Custom Hooks
-  const teams: any = useUserTeams(userID);
+  const teams: any = useUserTeams(userID, false);
 
   // States
   const [newTask, setNewTask] = useState<INewTask>({
@@ -50,7 +50,6 @@ const TaskCreate: React.FC = () => {
       [name]: value,
     };
     setNewTask(task);
-    console.log(task);
   };
 
   // Change Handler for Team Select Element
@@ -59,7 +58,6 @@ const TaskCreate: React.FC = () => {
     const task = { ...newTask };
     task.team = selectedValue;
     setNewTask(task);
-    console.log(task)
   };
 
   // Axios Post - Create Task

@@ -32,7 +32,6 @@ const TeamCreate: React.FC = () => {
       [name]: value,
     };
     setNewTeam(team);
-    console.log(team);
   };
 
   // Axios Post - Create Task

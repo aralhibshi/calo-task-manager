@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 // Components
 import TaskEdit from './TaskEdit';
@@ -76,13 +76,12 @@ const Task: React.FC<ITaskProps> = (props) => {
         </td>
         <td style={{color: 'white'}}>{teamName}</td>
         <td>
-          <TaskEdit task={props.task}/>
+          <TaskEdit task={props.task} setRefetch={props.setRefetch}/>
         </td>
         <td className='align-middle'>
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
         </td>
       </tr>
-      <ToastContainer/>
     </>
   )
 }

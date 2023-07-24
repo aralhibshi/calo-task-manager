@@ -6,7 +6,7 @@ import Axios from 'axios';
 import { ITeam } from '../interfaces/ITeam';
 import { IUserToken } from '../interfaces/IUser';
 
-const useUserTeams = (userID: IUserToken | null) => {
+const useUserTeams = (userID: IUserToken | null, refetch: any) => {
   const [teams, setTeams] = useState<Array<ITeam> | undefined>();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const useUserTeams = (userID: IUserToken | null) => {
       }
     };
     fetchUserTeams();
-  }, [userID]);
+  }, [userID, refetch]);
 
   return teams;
 };

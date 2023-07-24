@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState, useContext, Fragment, ChangeEvent } from 'react';
+import React, { useState, useContext, Fragment, ChangeEvent, useEffect } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 // Components
@@ -7,6 +7,9 @@ import Team from './Team';
 
 // Bootstrap and CSS
 import 'font-awesome/css/font-awesome.min.css';
+
+// Interafaces
+import { ITeam } from '../../interfaces/ITeam';
 
 // Contexts
 import UserIDContext from '../../contexts/UserIDContext';
@@ -16,20 +19,27 @@ import useUserTeams from '../../customHooks/useUserTeams';
 
 const TeamIndex: React.FC = () => {
 
+  // States
+  const [refetch, setRefetch]: any = useState(false);
+
+  // Set Refetch to False
+  useEffect(() => {
+    setRefetch(false);  
+  });
+
   // Context
   const { userID } = useContext(UserIDContext);
 
   // Custom Hook
-  const teams = useUserTeams(userID);
+  const teams: Array<ITeam> | undefined = useUserTeams(userID, refetch);
 
   // Map Through and Display Each Team
   const showAllTeams = (): JSX.Element[] | undefined => {
     if (typeof teams !== 'undefined' && teams.length > 0) {
-      console.log(teams);
       return teams.map((teamEl, index) => {
         return (
           <Fragment key={index}>
-            <Team team={teamEl}/>
+            <Team team={teamEl} setRefetch={setRefetch}/>
           </Fragment>
         )
       })

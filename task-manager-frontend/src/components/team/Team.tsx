@@ -55,13 +55,13 @@ const Team:React.FC<ITeamProps> = (props) => {
           <p className='text-muted mb-0'><em>tags go here</em></p>
         </td>
         <td>
-          <TeamEdit team={props.team}/>
+          <TeamEdit team={props.team} setRefetch={props.setRefetch}/>
         </td>
         <td className='align-middle'>
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTeam}></i>
         </td>
       </tr>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   )
 };
