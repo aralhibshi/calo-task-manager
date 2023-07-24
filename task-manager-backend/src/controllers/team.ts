@@ -10,6 +10,10 @@ const Team: Model<ITeam> = TeamModel;
 import { IUser, UserModel } from '../models/User';
 const User: Model<IUser> = UserModel;
 
+// Task Model/Schema and Interface
+import { ITask, TaskModel } from '../models/Task';
+const Task: Model<ITask> = TaskModel;
+
 // Create - Team (M-M, Teams and Users)
 export const team_create_post = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -96,6 +100,40 @@ export const team_edit_post = async (req: Request, res: Response): Promise<void>
     }
     catch (err) {
         console.log('Error Updating Team');
+        res.json({'message': err}).status(400);
+    }
+}
+
+// Delete - Team (Also Remove from Task and User)
+export const team_delete_post = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // IDs
+        const teamId = req.query.teamId;
+        const userId = req.query.userId;
+
+        // Delete Team
+        await Team.findByIdAndDelete(teamId);
+
+        // Delete All Tasks with Team
+        const deletedTasks: any = await Task.deleteMany({team: teamId});
+
+        // Array of Deleted Tasks
+        const allTaskIds: Array<ITask> = deletedTasks.map((task: ITask) => task._id)
+
+        // Remove Team from User
+        await User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: {
+                    teams: teamId,
+                    tasks: { $in: allTaskIds }
+                }
+            }
+        )
+        res.json({'message': 'Team Deleted!'});
+    }
+    catch (err) {
+        console.log('Error Deleting Team');
         res.json({'message': err}).status(400);
     }
 }

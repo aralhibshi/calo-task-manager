@@ -45,7 +45,7 @@ const TaskIndex: React.FC = () => {
   }
 
   return (
-    <div className="vh-100 gradient-custom-3">
+    <div className="gradient-custom-3 div-bg">
       {/* <select
         value={limit}
         onChange={handleLimitChange}
