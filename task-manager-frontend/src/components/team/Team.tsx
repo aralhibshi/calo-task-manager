@@ -36,9 +36,9 @@ const Team:React.FC<ITeamProps> = (props) => {
         <td>
           <TeamEdit team={props.team}/>
         </td>
-        {/* <td className='align-middle'>
-          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={deleteTask}></i>
-        </td> */}
+        <td className='align-middle'>
+          <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true"></i>
+        </td>
       </tr>
     </>
   )

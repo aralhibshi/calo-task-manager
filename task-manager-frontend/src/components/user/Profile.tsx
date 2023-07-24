@@ -37,7 +37,7 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <section className="vh-100 gradient-custom-3">
+      <section className="gradient-custom-3 div-bg">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-lg-6 mb-4 mb-lg-0">

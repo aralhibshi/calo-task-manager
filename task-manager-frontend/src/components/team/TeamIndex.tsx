@@ -37,7 +37,7 @@ const TeamIndex: React.FC = () => {
   }
 
   return (
-    <div className="vh-100 gradient-custom-3">
+    <div className="gradient-custom-3 div-bg">
       <MDBTable align='middle' className='' hover>
         <MDBTableHead>
           <tr>

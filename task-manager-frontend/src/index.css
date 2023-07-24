@@ -1,5 +1,7 @@
+/* Font */
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
 
+/* Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,6 +16,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 } 
 
+.home-bg {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+}
+
 div, h1, h2, input, p, u, a, td, th, label, select, button, i {
   font-family: 'Dosis', sans-serif;
   color: white; 
@@ -21,10 +29,6 @@ div, h1, h2, input, p, u, a, td, th, label, select, button, i {
 
 em {
   color: gray;
-}
-
-a#basic-nav-dropdown {
-  color: white;
 }
 
 tr, th {
@@ -36,6 +40,10 @@ tr, th {
   top: 6.5vh;
 }
 
+a#basic-nav-dropdown {
+  color: white;
+}
+
 .dropdown-item {
   color: white;
 }
@@ -44,22 +52,12 @@ tr, th {
   font-family: 'Dosis', sans-serif;
 }
 
-.card-body {
-  /* background-color: #180a36;
-  color: white; */
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.home-bg {
-  position: fixed;
-  top: 0;
-  z-index: -1;
-}
-
+/* Div Background */
 .gradient-custom-3 {
 /* fallback for old browsers */
 background: #84fab0;
@@ -70,6 +68,11 @@ background: -webkit-linear-gradient(to right, rgba(49, 14, 90, 0.5), rgba(121, 2
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 background: linear-gradient(to right, rgba(59, 13, 110, 0.5), rgba(112, 17, 121, 0.5))
 }
+
+.div-bg {
+  height: 93vh;
+}
+
 .gradient-custom-4 {
 /* fallback for old browsers */
 background: #84fab0;
@@ -81,6 +84,7 @@ background: -webkit-linear-gradient(to right, rgb(250, 228, 132), rgb(254, 204, 
 background: linear-gradient(to right, rgba(250, 228, 132, 1), rgba(254, 204, 154, 1))
 }
 
+/* Animation */
 @media (prefers-reduced-motion: no-preference) {
   .task-manager {
     animation: task-manager-translate infinite 2.7s alternate-reverse;
