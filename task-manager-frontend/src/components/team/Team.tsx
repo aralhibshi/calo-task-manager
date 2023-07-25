@@ -73,7 +73,6 @@ const Team:React.FC<ITeamProps> = (props) => {
           <i className="fa fa-trash" style={{fontSize: '25px', cursor: 'pointer'}} aria-hidden="true" onClick={handleSubmit}></i>
         </td>
       </tr>
-      {/* <ToastContainer /> */}
     </>
   )
 };

@@ -167,7 +167,13 @@ export const team_user_add_post = async (req: Request, res: Response): Promise<v
             }
         )
 
-        await User.findById
+        // Add Team to User
+        await User.findByIdAndUpdate(
+            userId,
+            {
+                $push: {teams: teamId}
+            }
+        )
     }
     catch (err) {
         console.log('Error Adding User to Team', err);

@@ -5,13 +5,13 @@ import Axios from 'axios';
 // Interfaces
 import { IUserAll, IUserToken } from '../interfaces/IUser';
 
-const useUserAll = (userID: IUserToken, teamID: string): Array<IUserAll> | undefined => {
+const useUserAll = (userID: IUserToken, teamID: string, refetch: any): Array<IUserAll> => {
   const [allUsers, setAllUsers] = useState<Array<IUserAll>>();
 
   useEffect(() => {
     const fetchUserAll = () => {
       if (userID?.user.id) {
-        Axios.get(`/user/index?userId=${userID.user.id}&teamId=${teamID}`)
+        Axios.get(`/user/others/index?userId=${userID.user.id}&teamId=${teamID}`)
         .then(res => {
           let users = res.data
           setAllUsers(users);
@@ -22,11 +22,9 @@ const useUserAll = (userID: IUserToken, teamID: string): Array<IUserAll> | undef
       }
     }
     fetchUserAll();
-  }, [userID, teamID]);
+  }, [userID, teamID, refetch]);
 
-  if (allUsers) {
-    return allUsers
-  }
+    return allUsers!
 };
 
 export default useUserAll;
