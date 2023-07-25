@@ -59,7 +59,7 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
 
   // Axios Post - Add User to Team
   const addUserToTeam = (team: any) => {
-    Axios.post(`/team/user/add?teamId=${team}&userId=${userID.user.id}`)
+    Axios.post(`/team/user/add?teamId=${team}&userId=${updatedTeam.userID}`)
     .then(res => {
       console.log(res)
     })
@@ -110,6 +110,7 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
                   id="form3Example1cg"
                   className="form-control form-control-lg"
                   onChange={selectChangeHandler}
+
                   name="team"
                 >
                   {show ? (
