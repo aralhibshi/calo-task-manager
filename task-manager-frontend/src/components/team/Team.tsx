@@ -64,8 +64,7 @@ const Team:React.FC<ITeamProps> = (props) => {
           <p className='text-muted mb-0'><em>tags go here</em></p>
         </td>
         <td>
-          {props.setRefetch ? (<TeamAddUser setRefetch={props.setRefetch}/>) : (<></>)}
-          {/* <TeamAddUser setRefetch={props.setRefetch}/> */}
+          {props.setRefetch ? (<TeamAddUser team={props.team} setRefetch={props.setRefetch}/>) : (<></>)}
         </td>
         <td>
           <TeamEdit team={props.team} setRefetch={props.setRefetch}/>

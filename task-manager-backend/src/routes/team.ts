@@ -11,5 +11,6 @@ router.get('/team/index', teamCtrl.team_index_get);
 router.get('/team/user/index', teamCtrl.team_user_index_get);
 router.post('/team/edit', teamCtrl.team_edit_post);
 router.post('/team/delete', teamCtrl.team_delete_post);
+router.post('/team/user/add', teamCtrl.team_user_add_post);
 
 export default router;

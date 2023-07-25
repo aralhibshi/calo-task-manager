@@ -1,10 +1,11 @@
 import React, { useState, useContext, ChangeEvent, Fragment } from 'react'
 import { Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
+import Axios from 'axios';
 
 // Interfaces
-import { IUser, IUserAll } from '../../interfaces/IUser';
-import { ITeamCreateProps } from '../../interfaces/ITeamCreateProps';
+import { IUserAll } from '../../interfaces/IUser';
+import { ITeamProps } from '../../interfaces/ITeamProps';
 
 // Contexts
 import UserIDContext from '../../contexts/UserIDContext';
@@ -12,22 +13,33 @@ import UserIDContext from '../../contexts/UserIDContext';
 // Custom Hooks
 import useUserAll from '../../customHooks/useUserAll';
 
-const TeamAddUser: React.FC<ITeamCreateProps> = (props) => {
+const TeamAddUser: React.FC<ITeamProps> = (props) => {
 
   // States
   const [show, setShow] = useState(false);
   const [updatedTeam, setUpdatedTeam] = useState({
-    id: ''
+    userID: '',
+    teamID: props.team._id
   });
 
   // Context
   const { userID } = useContext(UserIDContext);
 
   // Custom Hooks
-  const users: Array<IUserAll> | undefined = useUserAll(userID);
+  const users: Array<IUserAll> | undefined = useUserAll(userID, updatedTeam.teamID);
 
-  // Handle Show Modal
-  const handleShow = (): void => {
+  // Select Team
+  const handleSelectTeam = (e: any) => {
+    const id = e.target.id;
+    const team = { ...updatedTeam };
+    team.teamID = id;
+    setUpdatedTeam(team);
+    console.log(team);
+  }
+
+  // Handle Show Modal and Select Team
+  const handleShow = (e: any): void => {
+    handleSelectTeam(e);
     setShow(true);
   };
 
@@ -40,18 +52,30 @@ const TeamAddUser: React.FC<ITeamCreateProps> = (props) => {
   const selectChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
     const selectedValue = e.target.value;
     const team = { ...updatedTeam };
-    team.id = selectedValue;
+    team.userID = selectedValue;
     setUpdatedTeam(team);
     console.log(team);
   };
 
+  // Axios Post - Add User to Team
+  const addUserToTeam = (team: any) => {
+    Axios.post(`/team/user/add?teamId=${team}&userId=${userID.user.id}`)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
-    // if (props.setRefetch) {
-    //   props.setRefetch(true);
-    // }
+    toast('User Added to Team!');
+    if (props.setRefetch) {
+      props.setRefetch(true);
+    }
     e.preventDefault();
-    // updateTeam(updatedTeam);
+    addUserToTeam(updatedTeam.teamID);
     handleClose();
   }
 
@@ -62,7 +86,7 @@ const TeamAddUser: React.FC<ITeamCreateProps> = (props) => {
       return users.map((userEl, index) => {
         return (
           <Fragment key={index}>
-            <option value={userEl.id}>{userEl.name}</option>
+            <option value={userEl._id}>{userEl.name}</option>
           </Fragment>
         )
       })
@@ -71,7 +95,7 @@ const TeamAddUser: React.FC<ITeamCreateProps> = (props) => {
 
   return (
     <>
-      <i className="fa fa-user-plus" aria-hidden="true" style={{fontSize: '25px', cursor: 'pointer'}} onClick={handleShow}></i>
+      <i id={props.team._id} className="fa fa-user-plus" aria-hidden="true" style={{fontSize: '25px', cursor: 'pointer'}} onClick={handleShow}></i>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -88,7 +112,13 @@ const TeamAddUser: React.FC<ITeamCreateProps> = (props) => {
                   onChange={selectChangeHandler}
                   name="team"
                 >
+                  {show ? (
+                  <>
                   {showAllUsers()}
+                  </>
+                  ) : (
+                  <></>
+                  )}
                 </select>
               </div>
               <div className="d-flex justify-content-center">

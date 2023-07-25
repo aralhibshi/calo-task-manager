@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import { MDBBadge } from 'mdb-react-ui-kit';
 import Axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 // Components
 import TaskEdit from './TaskEdit';
