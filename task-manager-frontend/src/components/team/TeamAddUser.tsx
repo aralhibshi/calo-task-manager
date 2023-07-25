@@ -1,4 +1,4 @@
-import React, { useState, useContext, ChangeEvent, Fragment } from 'react'
+import React, { useState, useContext, ChangeEvent, Fragment, useEffect } from 'react'
 import { Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import Axios from 'axios';
@@ -11,7 +11,7 @@ import { ITeamProps } from '../../interfaces/ITeamProps';
 import UserIDContext from '../../contexts/UserIDContext';
 
 // Custom Hooks
-import useUserAll from '../../customHooks/useUserAll';
+import useUserAllOthers from '../../customHooks/useUserAllOthers';
 
 const TeamAddUser: React.FC<ITeamProps> = (props) => {
 
@@ -21,26 +21,44 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
     userID: '',
     teamID: props.team._id
   });
+  const [refetch, setRefetch] = useState<boolean>(false);
+
+  useEffect(() => {
+    setRefetch(false);
+  })
 
   // Context
   const { userID } = useContext(UserIDContext);
 
   // Custom Hooks
-  const users: Array<IUserAll> | undefined = useUserAll(userID, updatedTeam.teamID);
+  const users: Array<IUserAll> = useUserAllOthers(userID, updatedTeam.teamID, refetch);
 
   // Select Team
-  const handleSelectTeam = (e: any) => {
+  const handleSelectTeam = (e: any): void => {
     const id = e.target.id;
     const team = { ...updatedTeam };
     team.teamID = id;
+    setUpdatedTeam(team);
+  }
+
+  // Set Default User
+  const handleDefaultUser = (): void => {
+    const id = users[0]._id!;
+    const team = {...updatedTeam};
+    team.userID = id;
     setUpdatedTeam(team);
     console.log(team);
   }
 
   // Handle Show Modal and Select Team
   const handleShow = (e: any): void => {
-    handleSelectTeam(e);
-    setShow(true);
+    if (users.length > 0) {
+      handleSelectTeam(e);
+      handleDefaultUser();
+      setShow(true);
+    } else {
+      toast('No Users to Add!')
+    }
   };
 
   // Handle Close Modal
@@ -61,7 +79,7 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
   const addUserToTeam = (team: any) => {
     Axios.post(`/team/user/add?teamId=${team}&userId=${updatedTeam.userID}`)
     .then(res => {
-      console.log(res)
+      console.log(res) 
     })
     .catch(err => {
       console.log(err)
@@ -71,12 +89,13 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
   // Submit
   const handleSubmit = (e: React.FormEvent): void => {
     toast('User Added to Team!');
-    if (props.setRefetch) {
-      props.setRefetch(true);
-    }
     e.preventDefault();
     addUserToTeam(updatedTeam.teamID);
     handleClose();
+    if (props.setRefetch) {
+      props.setRefetch(true);
+      setRefetch(true);
+    }
   }
 
   // Map Through and Display Each Team
@@ -110,8 +129,7 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
                   id="form3Example1cg"
                   className="form-control form-control-lg"
                   onChange={selectChangeHandler}
-
-                  name="team"
+                  name="user"
                 >
                   {show ? (
                   <>
@@ -134,7 +152,6 @@ const TeamAddUser: React.FC<ITeamProps> = (props) => {
           </div>
         </Modal.Body>
       </Modal>
-      <ToastContainer/>
     </>
   )
 };

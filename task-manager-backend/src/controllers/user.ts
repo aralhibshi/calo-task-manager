@@ -31,34 +31,37 @@ export const user_detail_get = async (req: Request | any, res: Response): Promis
   }
 }
 
-// Read - All Users
-export const user_index_get = async (req: Request, res: Response): Promise<void> => {
+// Read - All Users without Current User and Team Users
+export const user_others_index_get = async (req: Request, res: Response): Promise<void> => {
   try {
     // IDs
-    const userId = req.query.userId;
-    const teamId = req.query.teamId
+    const teamId = req.query.teamId;
 
-    const users = await User.find()
-    let allUsers: any = []
+    // Find All Users
+    const users = await User.find();
+    let allUsers: any = [];
 
-    const team = await Team.findById(teamId);
-    let allTeamUsers: any = []
+    // Find All Team Users
+    const team: any = await Team.findById(teamId);
+    let allTeamUsers: any = [];
 
     // Add All Team Users to Array
     for (let i = 0; i < team?.users.length!; i++) {
-      allTeamUsers.push(team?.users[i].user)
+      allTeamUsers.push(team?.users[i].user.toString());
     }
 
-    // Add all Users to Array except for Current User and Team Users
+    // Add All Users except for current User and Team Users
     for (let i = 0; i < users.length; i++) {
-      if (userId !== users[i]._id.toString() && (allTeamUsers[i] !== users[i]._id)) {
-        allUsers.push({_id: users[i]._id, name: users[i].firstName + ' ' + users[i].lastName})
+      if (team && users) {
+        if (!allTeamUsers.includes(users[i]._id.toString())) {
+          allUsers.push({ _id: users[i]._id, name: users[i].firstName + ' ' + users[i].lastName });
+        }
       }
     }
-    res.json(allUsers);
+    res.json(allUsers)
   } 
   catch (err) {
-    console.log('Error Getting All Users')
+    console.log('Error Getting Users')
     res.json({'message': err})
   }
 }
