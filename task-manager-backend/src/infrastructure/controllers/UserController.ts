@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../../application/services/UserService';
-import { UserRepository } from '../data/UserRepository';
+import { UserRepository } from '../persistance/UserRepositoryImpl';
 
 export const user_detail_get = async (req: Request | any, res: Response): Promise<void> => {
   try {
@@ -14,7 +14,7 @@ export const user_detail_get = async (req: Request | any, res: Response): Promis
     }
   } catch (err) {
     console.log(err);
-    res.json({ message: err }).status(400);
+    res.json({ message: err }).status(500);
   }
 };
 

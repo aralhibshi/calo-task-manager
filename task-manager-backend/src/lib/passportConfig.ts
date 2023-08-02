@@ -4,7 +4,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
 // Model/Schema
-import { IUser, UserModel } from '../models/User';
+import { IUser, UserModel } from '../core/entities/User';
 const User: Model<IUser> = UserModel;
 
 // Save User ID into Session

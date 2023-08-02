@@ -3,15 +3,15 @@ import { Request, Response } from 'express';
 import { Model } from 'mongoose';
 
 // Team Model/Schema and Interface
-import { ITeam, TeamModel } from '../models/Team';
+import { ITeam, TeamModel } from '../core/entities/Team';
 const Team: Model<ITeam> = TeamModel;
 
 // User Model/Schema and Interface
-import { IUser, UserModel } from '../models/User';
+import { IUser, UserModel } from '../core/entities/User';
 const User: Model<IUser> = UserModel;
 
 // Task Model/Schema and Interface
-import { ITask, TaskModel } from '../models/Task';
+import { ITask, TaskModel } from '../core/entities/Task';
 const Task: Model<ITask> = TaskModel;
 
 // Create - Team (M-M, Teams and Users)
@@ -122,8 +122,10 @@ export const team_delete_post = async (req: Request, res: Response): Promise<voi
         }
 
         // Remove Team and Tasks from User
-        await User.findByIdAndUpdate(
-            userId,
+        await User.updateMany(
+            {
+                teams: { $in: teamId}
+            },
             {
                 $pull: {
                     teams: teamId,

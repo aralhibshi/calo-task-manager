@@ -3,15 +3,15 @@ import { Request, Response } from 'express'
 import { Model } from 'mongoose';
 
 // Task Model/Schema and Interface
-import { ITask, TaskModel } from '../models/Task';
+import { ITask, TaskModel } from '../core/entities/Task';
 const Task: Model<ITask> = TaskModel;
 
 // User Model/Schema and Interface
-import { IUser, UserModel } from '../models/User';
+import { IUser, UserModel } from '../core/entities/User';
 const User: Model<IUser> = UserModel;
 
 // Team Model/Schema and Interface
-import { ITeam, TeamModel } from '../models/Team';
+import { ITeam, TeamModel } from '../core/entities/Team';
 const Team: Model<ITeam> = TeamModel;
 
 // Create - Task (M-M, Tasks and Users)

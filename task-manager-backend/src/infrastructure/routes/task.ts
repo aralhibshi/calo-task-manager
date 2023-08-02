@@ -3,10 +3,10 @@ import express, { Router } from 'express';
 const router: Router = express.Router();
 
 // Authorization
-import { isLoggedIn } from '../lib/isLoggedIn';
+import { isLoggedIn } from '../../lib/isLoggedIn';
 
 // Controller
-import * as taskCtrl from '../controllers/task';
+import * as taskCtrl from '../../controllers/task';
 
 // Routes
 router.post('/task/add', taskCtrl.task_create_post);

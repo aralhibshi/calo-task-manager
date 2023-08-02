@@ -6,13 +6,13 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 // Interfaces
-import { IPayload } from '../interfaces/IPayload';
+import { IPayload } from '../core/interfaces/IPayload';
 
 // Dotenv
 dotenv.config();
 
 // Model/Schema and Interface
-import { IUser, UserModel } from '../models/User';
+import { IUser, UserModel } from '../core/entities/User';
 const User: Model<IUser> = UserModel;
 
 // Create - User (Sign Up)

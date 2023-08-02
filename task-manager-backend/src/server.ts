@@ -39,10 +39,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Imported Routes
-import authRoute from './routes/auth';
-import userRoute from './routes/user';
-import taskRoute from './routes/task';
-import teamRoute from './routes/team';
+import authRoute from './infrastructure/routes/auth';
+import userRoute from './infrastructure/routes/user';
+import taskRoute from './infrastructure/routes/task';
+import teamRoute from './infrastructure/routes/team';
 
 // Mounted Routes
 app.use('/', authRoute);
