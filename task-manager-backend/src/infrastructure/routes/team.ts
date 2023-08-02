@@ -3,7 +3,7 @@ import express, { Router } from 'express';
 const router: Router = express.Router();
 
 // Controller
-import * as teamCtrl from '../../controllers/team';
+import * as teamCtrl from '../controllers/TeamController';
 
 // Routes
 router.post('/team/add', teamCtrl.team_create_post);

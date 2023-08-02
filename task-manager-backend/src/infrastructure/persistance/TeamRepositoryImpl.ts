@@ -11,6 +11,7 @@ export class TeamRepository implements ITeamRepository {
   }
 
   async createTeam(teamData: ITeam): Promise<ITeam> {
+    console.log('team created')
     const team: ITeam = new this.Team(teamData);
     return team.save();
   }
@@ -27,14 +28,14 @@ export class TeamRepository implements ITeamRepository {
     await this.Team.findByIdAndDelete(teamId).exec();
   }
 
-  async addUserToTeam(userId: string, teamId: string): Promise<void> {
+  async addUserToTeam(userId: string, teamId: string, isOwner: boolean): Promise<void> {
     await this.Team.findByIdAndUpdate(
       teamId,
       {
         $push: {
           users: {
             user: userId,
-            isOwner: false,
+            isOwner: isOwner,
           },
         },
       },
