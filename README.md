@@ -1,4 +1,4 @@
-# calo-task-manager
+# Calo Task Manager
 
 A full-stack task manager where users sign up, create teams, add other users to them, and create and track tasks
 for each team. I built it on my own in July 2023, as a training project during my software engineering internship
